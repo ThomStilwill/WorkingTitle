@@ -1,0 +1,11 @@
+html,
+body {
+  font-family: Tahoma;
+}
+
+.header {
+  height: 60px;
+}
+.footer {
+  height: 20px;
+}
