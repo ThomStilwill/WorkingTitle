@@ -5,8 +5,6 @@ var jsonServer = require('json-server');
 var port = process.env.PORT || 3000;
 
 
-
-
 app.use('/api', jsonServer.router('db.json'));
 //app.use(require('./routes'))
 app.use(express.static('dist/web'))

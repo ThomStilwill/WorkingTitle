@@ -1,13 +1,17 @@
-<html ng-app="ratel" ng-controller="basecontroller">
+<html ng-app="ratel">
     <head>
         <link rel="stylesheet" type="text/css" href="css\libs.css">
         <link rel="stylesheet" type="text/css" href="css\app.css">
         <script src="scripts/libs.js"></script>
         <script src="app/app.js"></script>
-        
+        <base href="/">
         <title>{{title}}</title>
     </head> 
-    <body>
+    <body class="view">
         <span class="label label-warning">{{title}}</span>
+        <a ui-sref="persons" ui-sref-active="active">Persons</a>
+        <a ui-sref="about" >About</a>
+    
+        <ui-view></ui-view>
     </body>
 </html>

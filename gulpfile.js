@@ -14,7 +14,8 @@ gulp.task('default',['app','content', 'css','less','libs'], function(){
 
 gulp.task('watch', ['default'], function(){
     return gulp.watch(['less/**/*.less',
-                       'client/**/*.*']
+                       'client/**/*.*'
+                        ]
                        ,['default']);
 })
 
@@ -67,7 +68,9 @@ gulp.task('libs', function(cb){
     var dest = distfolder + 'scripts';
 
     pump([
-        gulp.src(['node_modules/angular/angular.min.js']),
+        gulp.src(['node_modules/angular/angular.min.js',
+                  'node_modules/angular-ui-router/release/angular-ui-router.min.js'
+                    ]),
         concat('libs.js'),
         gulp.dest(dest)
     ],cb)
@@ -82,7 +85,7 @@ gulp.task('app-templates', function(cb){
     ],cb)
 })
 
-gulp.task('app', function(cb){
+gulp.task('app',['app-templates'], function(cb){
     var dest = distfolder + 'app';
 
     pump([

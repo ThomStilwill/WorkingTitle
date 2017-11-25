@@ -1,0 +1,13 @@
+<h3>Persons</h3>
+
+
+<label>
+    Query 
+    <select ng-model="$ctrl.field"><option value="suffix" selected>Suffix</option></select>
+    <select ng-model="$ctrl.operator"><option value="=" selected>=</option></select>
+    <input type="text" ng-model="$ctrl.query">
+</label>
+
+<div ng-repeat="person in $ctrl.people">
+    {{person.lastname}}
+</div>
