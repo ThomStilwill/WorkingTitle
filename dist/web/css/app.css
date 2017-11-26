@@ -1,14 +1,89 @@
 html,
 body {
   font-family: Tahoma;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-.header {
-  height: 60px;
+header {
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  background-color: lightsteelblue;
+  padding: 0 10px;
 }
-.footer {
-  height: 20px;
+header div {
+  height: 100%;
 }
-.view {
-  padding: 20px;
+header .sitetitle {
+  display: inline-block;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 24px;
+  line-height: 40px;
+  color: darkred;
+}
+header .sitemenu {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  padding-right: 10px;
+}
+.content {
+  position: absolute;
+  width: 100%;
+  top: 40px;
+  bottom: 30px;
+  background-color: lightgray;
+  padding: 10px;
+  overflow: hidden;
+}
+footer {
+  position: absolute;
+  height: 30px;
+  width: 100%;
+  bottom: 0;
+  background-color: lightslategrey;
+  color: #505050;
+  border-top: 1px dotted black;
+}
+footer div {
+  position: absolute;
+  height: 100%;
+  line-height: 30px;
+}
+footer .footer-left {
+  left: 0;
+  width: 160px;
+  padding-left: 10px;
+}
+footer .footer-center {
+  left: 160px;
+  right: 160px;
+  text-align: center;
+  background-color: lightsteelblue;
+}
+footer .footer-right {
+  right: 0;
+  width: 160px;
+  padding-right: 10px;
+  text-align: right;
+}
+
+.query-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.query {
+  border-bottom: 1px solid black;
+}
+.results {
+  align-self: stretch;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+}
+table {
+  border-bottom: 1px solid red;
 }

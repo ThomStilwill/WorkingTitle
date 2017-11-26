@@ -1,21 +1,83 @@
-@headerheight: 60px;
-@footerheight: 20px;
+@headerheight: 40px;
+@footerheight: 30px;
+@footerwidth: 160px;
 
-.header{
+header{
+    position: absolute;
     height: @headerheight;
+    width: 100%;
+    background-color: lightsteelblue;
+    padding:0 10px;
+    
+
+    div{
+       height:100%;
+
+    }
+
+    .sitetitle{
+        display:inline-block;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 24px;
+        line-height: @headerheight;
+        color: darkred;
+    }
+
+    .sitemenu{
+        position: absolute;
+        display:inline-block;
+        right: 0;
+        padding-right: 10px;
+    }
+
+
 }
 
 .content{
-
+    position: absolute;
+    width: 100%;
+    top: @headerheight;
+    bottom: @footerheight;
+    background-color: lightgray;
+    padding:10px;
+    overflow: hidden;
 }
 
-.footer{
+footer{
+    position: absolute;
     height: @footerheight;
-}
+    width: 100%;
+    bottom:0;
+    background-color: lightslategrey;
+    color: #505050;
+    border-top: 1px dotted black;
 
+    div{
+        position: absolute;
+        height: 100%;  
+        line-height: 30px;
+    }
 
-//temp
+    .footer-left
+    {
+      left: 0;
+      width: @footerwidth;
+      padding-left: 10px;
+    }
+  
+    .footer-center
+    {
+      left: @footerwidth;
+      right: @footerwidth;
+      text-align: center;
+      background-color: lightsteelblue;
+    }
 
-.view{
-    padding: 20px;
+    .footer-right
+    {
+      right: 0;
+      width: @footerwidth;
+      padding-right: 10px;
+      text-align: right;
+    }
 }

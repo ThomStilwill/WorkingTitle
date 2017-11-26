@@ -1,4 +1,4 @@
-<html ng-app="ratel">
+<html ng-app="ratel" ng-controller="basecontroller">
     <head>
         <link rel="stylesheet" type="text/css" href="css\libs.css">
         <link rel="stylesheet" type="text/css" href="css\app.css">
@@ -7,11 +7,24 @@
         <base href="/">
         <title>{{title}}</title>
     </head> 
-    <body class="view">
-        <span class="label label-warning">{{title}}</span>
-        <a ui-sref="persons" ui-sref-active="active">Persons</a>
-        <a ui-sref="about" >About</a>
-    
-        <ui-view></ui-view>
+    <body>
+        <header>
+            <div class="sitetitle">TCS</div>
+            <div class="sitemenu">
+                <a ui-sref="persons" ui-sref-active="active">Persons</a>
+                <a ui-sref="about" >About</a>
+            </div>
+        </header>
+
+        <div class="content">
+            <ui-view></ui-view>        
+        </div>
+        
+        <footer>
+            <div class="footer-left">Version {{version}}</div>
+            <div class="footer-center"> Message Center</div>
+            <div class="footer-right">&trade; {{year}} Thom Stilwill</div>
+        </footer>  
+
     </body>
 </html>

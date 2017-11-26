@@ -80,7 +80,7 @@ gulp.task('app-templates', function(cb){
     var dest = distfolder + 'app';
 
     pump([
-        gulp.src(['client/app/*.html']),
+        gulp.src(['client/app/**/*.html']),
         gulp.dest(dest)
     ],cb)
 })
@@ -89,7 +89,7 @@ gulp.task('app',['app-templates'], function(cb){
     var dest = distfolder + 'app';
 
     pump([
-        gulp.src(['client/app/*.js']),
+        gulp.src(['client/app/**/*.js']),
         concat('app.js'),
         gulp.dest(dest)
     ],cb)

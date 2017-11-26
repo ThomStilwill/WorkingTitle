@@ -1,0 +1,47 @@
+<div class="query-container">
+<div class="query">
+    <form class="form-inline">
+        <div class="form-group">
+
+            <div ng-repeat="query in $ctrl.queries">
+                <label>
+                    <select placeholder="field" class="form-control" ng-model="query.field" ng-options="o as o for o in $ctrl.fields">
+                    </select>
+                    <select placeholder="operator" class="form-control" ng-model="query.operator">
+                        <option value="=" selected>=</option>
+                        <option value="_like=">like</option>
+                        <option value="_gte=">&gt;</option>
+                        <option value="_lte=">&lt;</option>
+                        <option value="q=">full</option>
+                    </select>
+                    <input placeholder="value" class="form-control" type="text" ng-model="query.value" ng-model-options="{updateOn: 'default', debounce : 200}">
+
+                    <button class="btn btn-default" ng-click="$ctrl.addQuery()">+</button>
+                    <button class="btn btn-default" ng-click="$ctrl.deleteQuery($index)" ng-show="$ctrl.queries.length > 1">-</button>
+                </label>
+            </div>
+            Count: {{$ctrl.people.length}}
+        </div>
+    </form>
+</div>
+<div class="results">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Company</th>
+                <th scope="col">Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="person in $ctrl.people">
+                <th>{{person.id}}</th>
+                <td>{{person.firstname}} {{person.lastname}}, {{person.suffix}}</td>
+                <td>{{person.company}}</td>
+                <td>{{person.phone}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

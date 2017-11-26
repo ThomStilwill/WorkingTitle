@@ -15,7 +15,10 @@ angular.module('ratel')
                    return PersonService.fetch();
                }
            }
-       }
+       },
+       {  name: 'about',
+       component: 'about'
+   }
     ]
 
     states.forEach(function(state){
