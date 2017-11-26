@@ -34,7 +34,12 @@ angular.module('ratel')
                 }
             })  
         }
-
+        
+        ctrl.querytopstyle = function(){
+            var top = 30 + (40 * ctrl.queries.length)
+            return {'top' : top + 'px'}
+        }
+        
         function query(){
             PersonService.fetch(ctrl.queries)
             .then(function(people){
