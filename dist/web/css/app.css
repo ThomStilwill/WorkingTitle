@@ -10,7 +10,8 @@ header {
   position: absolute;
   height: 40px;
   width: 100%;
-  background-color: lightsteelblue;
+  background-color: #bbb;
+  border-bottom: 1px solid #444;
   padding: 0 10px;
 }
 header div {
@@ -34,7 +35,7 @@ header .sitemenu {
   width: 100%;
   top: 40px;
   bottom: 30px;
-  background-color: lightgray;
+  background-color: #eee;
   padding: 10px;
   overflow: hidden;
 }
@@ -43,9 +44,9 @@ footer {
   height: 30px;
   width: 100%;
   bottom: 0;
-  background-color: lightslategrey;
+  background-color: #bbb;
   color: #505050;
-  border-top: 1px dotted black;
+  border-top: 1px dotted #444;
 }
 footer div {
   position: absolute;
@@ -61,7 +62,6 @@ footer .footer-center {
   left: 160px;
   right: 160px;
   text-align: center;
-  background-color: lightsteelblue;
 }
 footer .footer-right {
   right: 0;
@@ -76,7 +76,7 @@ footer .footer-right {
 }
 .query-container .query {
   position: relative;
-  height: 80px;
+  height: 45px;
 }
 .query-container .query .criteria {
   display: inline-block;
@@ -90,31 +90,63 @@ footer .footer-right {
 }
 .query-container .results {
   position: absolute;
-  top: 80px;
+  top: 45px;
   width: 100%;
   bottom: 0px;
-}
-.query-container .results table,
-.query-container .results tr {
-  height: 100%;
 }
 .query-container .results table {
   top: 0;
   bottom: 0;
   margin-bottom: 0;
-  border-top: 1px solid darkgrey;
-  border-bottom: 1px solid darkgrey;
+  border-collapse: collapse;
+}
+.query-container .results table tr {
+  display: block;
+}
+.query-container .results table thead,
+.query-container .results table tbody,
+.query-container .results table tfoot,
+.query-container .results table tr {
+  width: 100%;
+}
+.query-container .results table th:first-child,
+.query-container .results table td:first-child {
+  width: 60px;
+}
+.query-container .results table th,
+.query-container .results table td {
+  width: 240px;
+}
+.query-container .results table th:last-child,
+.query-container .results table td:last-child {
+  width: 200px;
+}
+.query-container .results table thead {
+  border-top: 2px solid darkgrey;
+  border-bottom: 2px solid darkgrey;
+  background-color: #ddd;
 }
 .query-container .results table tbody {
   position: absolute;
-  top: 38px;
-  bottom: 0;
+  top: 50px;
+  bottom: 40px;
   right: 0;
   left: 0;
   overflow: auto;
 }
-.query-container .results table tbody tr {
-  width: auto;
+.query-container .results table tbody td,
+.query-container .results table tbody th {
+  border: 0;
+}
+.query-container .results table tfoot {
+  position: absolute;
+  height: 45px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-top: 1px solid darkgrey;
+  border-bottom: 2px solid darkgrey;
+  background-color: #ddd;
 }
 .query-container .scrollbar::-webkit-scrollbar {
   width: 16px;

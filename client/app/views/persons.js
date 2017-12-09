@@ -36,7 +36,7 @@ angular.module('ratel')
         }
         
         ctrl.querytopstyle = function(){
-            var top = 30 + (40 * ctrl.queries.length)
+            var top = 5 + (40 * ctrl.queries.length)
             return {'top' : top + 'px'}
         }
         

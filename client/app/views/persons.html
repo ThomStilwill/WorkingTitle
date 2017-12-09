@@ -21,9 +21,7 @@
                     </label>
                 </div>
             </div>
-            <div class="info">
-                Count: {{$ctrl.people.length}}
-            </div>
+           
         </form>
     </div>
     <div class="results" ng-style="$ctrl.querytopstyle()">
@@ -44,6 +42,15 @@
                     <td>{{person.phone}}</td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>
+                        <div class="info">
+                            Count: {{$ctrl.people.length}}
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
