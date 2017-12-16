@@ -83,7 +83,9 @@ gulp.task('libs', function(cb){
         gulp.src(['node_modules/angular/angular.min.js',
                   'node_modules/angular-ui-router/release/angular-ui-router.min.js',
                   'node_modules/jquery/dist/jquery.min.js',
-                  'node_modules/bootstrap/dist/js/bootstrap.min.js'
+                  'node_modules/bootstrap/dist/js/bootstrap.min.js',
+                  'node_modules/moment/moment.js',
+                  'client/scripts/**/*.js'
                     ]),
         concat('libs.js'),
         gulp.dest(dest)

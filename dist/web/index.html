@@ -135,7 +135,7 @@
             <!-- /.navbar-collapse -->
         </nav>
     </header>
-    <div class="container body-content" id="content">
+    <div class="container body-content" ui-view id="content">
         Body here
     </div>
     <footer>
@@ -143,11 +143,9 @@
             Version {{version}}
             <!-- <button id="themeButton" class="navbar-right icon-button glyphicon-adjust"></button> -->
         </div>
-        <div class="footer-center">Message Center</div>
+        <div class="footer-center">{{message}}</div>
         <div class="footer-right">&trade; {{year}} Thom Stilwill</div>
     </footer>
-
-
 </body>
 
 </html>

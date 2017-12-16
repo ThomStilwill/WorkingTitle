@@ -1,8 +1,8 @@
 angular.module('ratel', ['ui.router'])
 .controller('basecontroller',['$scope',function($scope){
-    $scope.title='Ratel';
+    $scope.title='Ratel'
     $scope.version = '0.0.1'
-    $scope.year = (new Date()).getFullYear();
+    $scope.year = (new Date()).getFullYear()
     $scope.theme = "theme-light"
 }]);
 
@@ -16,6 +16,9 @@ angular.module('ratel')
   });
    
    var states = [
+        {  name: 'home',
+            component: 'home'
+        },
         {  name: 'persons',
            component: 'persons',
            resolve: {
@@ -52,7 +55,7 @@ angular.module('ratel')
         console.log('Transition erred!');
     });
 
-    $state.go('persons')
+    $state.go('home')
 }])
 
 
@@ -106,6 +109,14 @@ angular.module('ratel')
 angular.module('ratel')
 .component('about',{
     templateUrl: 'app/views/about.html',
+    controller: function($scope){
+        const ctrl = this;
+        
+    }
+})
+angular.module('ratel')
+.component('home',{
+    templateUrl: 'app/views/home.html',
     controller: function($scope){
         const ctrl = this;
         

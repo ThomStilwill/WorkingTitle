@@ -8,6 +8,9 @@ angular.module('ratel')
   });
    
    var states = [
+        {  name: 'home',
+            component: 'home'
+        },
         {  name: 'persons',
            component: 'persons',
            resolve: {
@@ -44,6 +47,6 @@ angular.module('ratel')
         console.log('Transition erred!');
     });
 
-    $state.go('persons')
+    $state.go('home')
 }])
 
