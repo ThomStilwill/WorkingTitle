@@ -1,0 +1,57 @@
+﻿.theme-dark{
+
+  @border-color:#333;
+  @color:#333;
+  @background-color:#000;
+
+  color:@color;
+  background-color: @background-color;
+
+  .navbar,
+  .navbar-collapse,
+  .navbar-default {
+    background-color: @background-color!important;
+    border-color: @border-color;
+    color: @color;
+    a{
+      color:@color;
+    }
+  }
+
+  input[type=search] {
+    color:@color;
+    background-color: @background-color;
+    border-color: @border-color;
+  }
+
+    footer
+  {
+    background-color: @background-color;
+    border-top: 1px dotted @border-color;
+
+        div{
+          button{
+            color: orange;
+          }
+        }
+    }
+
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    color: @color;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: @color;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: @color;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: @color;
+  }
+
+  #weather{
+    opacity:0.2;
+  }
+
+
+}

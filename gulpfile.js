@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     clean = require('gulp-clean-dest'),
     distfolder = 'dist/web/';
 
-gulp.task('default',['app','content', 'css','less','libs'], function(){
+gulp.task('default',['app','content', 'less','libs','fonts'], function(){
 
 })
 
@@ -28,6 +28,16 @@ gulp.task('content',function(cb){
     ],cb);
 })
 
+
+gulp.task('fonts',  function(cb){
+    var dest = distfolder + 'fonts';
+
+    pump([
+        gulp.src(['node_modules/bootstrap/dist/fonts/*.*']),
+        gulp.dest(dest)
+    ],cb)
+})
+
 gulp.task('cleancss',function(cb){
     // var dest = distfolder + 'css';
     // return clean(dest,null,{force: true});
@@ -37,23 +47,25 @@ gulp.task('less',  function(cb){
     var dest = distfolder + 'css';
 
     pump([
-        gulp.src(['client/less/*.less']),
+        gulp.src([  'node_modules/bootstrap/less/bootstrap.less',
+                    'client/less/*.less',
+                  ]),
         less(),
         concat('app.css'),
         gulp.dest(dest)
     ],cb)
 })
 
-gulp.task('css', function(cb){
-    var dest = distfolder + 'css';
+// gulp.task('css', function(cb){
+//     var dest = distfolder + 'css';
 
-    pump([
-        gulp.src(['node_modules/bootstrap/less/bootstrap.less']),
-        less(),
-        concat('libs.css'),
-        gulp.dest(dest)
-    ],cb)
-})
+//     pump([
+//         gulp.src([]),
+//         less(),
+//         concat('libs.css'),
+//         gulp.dest(dest)
+//     ],cb)
+// })
 
 gulp.task('cleanlibs',function(cb){
     var dest = distfolder + 'scripts';
@@ -69,7 +81,9 @@ gulp.task('libs', function(cb){
 
     pump([
         gulp.src(['node_modules/angular/angular.min.js',
-                  'node_modules/angular-ui-router/release/angular-ui-router.min.js'
+                  'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+                  'node_modules/jquery/dist/jquery.min.js',
+                  'node_modules/bootstrap/dist/js/bootstrap.min.js'
                     ]),
         concat('libs.js'),
         gulp.dest(dest)
