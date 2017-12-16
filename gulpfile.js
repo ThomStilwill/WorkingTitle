@@ -2,6 +2,7 @@ var gulp = require('gulp'),
     pump = require('pump'),
     watch = require('gulp-watch'),
     concat = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
     path = require('path'),
     fs = require('fs'),
     less = require('gulp-less'),
@@ -106,7 +107,9 @@ gulp.task('app',['app-templates'], function(cb){
 
     pump([
         gulp.src(['client/app/**/*.js']),
+        sourcemaps.init(),
         concat('app.js'),
+        sourcemaps.write('../maps'),
         gulp.dest(dest)
     ],cb)
 })

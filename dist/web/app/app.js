@@ -1,6 +1,6 @@
 angular.module('ratel', ['ui.router'])
 .controller('basecontroller',['$scope',function($scope){
-    $scope.title='Ratel'
+    $scope.title='Stilwill.net'
     $scope.version = '0.0.1'
     $scope.year = (new Date()).getFullYear()
     $scope.theme = "theme-light"
@@ -17,7 +17,12 @@ angular.module('ratel')
    
    var states = [
         {  name: 'home',
-            component: 'home'
+            component: 'home',
+            resolve: {
+                links: function(LinkService){
+                    return LinkService.fetch();
+                }
+            }
         },
         {  name: 'persons',
            component: 'persons',
@@ -41,15 +46,15 @@ angular.module('ratel')
     
   }])
 .run(['$state', '$trace', '$transitions', function($state,$trace,$transitions) {
-    $trace.enable('TRANSITION');
+    //$trace.enable('TRANSITION');
 
     $state.defaultErrorHandler(function() {
         console.log('Default error handler fired!');
     });
 
     $transitions.onStart({}, function(transition) {
-        console.log('Starting transition!');
-        transition.promise.finally(console.log('Transition promise finally fired!'));
+        //console.log('Starting transition!');
+        //transition.promise.finally(console.log('Transition promise finally fired!'));
     });
     $transitions.onError({}, function(transition) {
         console.log('Transition erred!');
@@ -58,6 +63,23 @@ angular.module('ratel')
     $state.go('home')
 }])
 
+
+angular.module('ratel')
+.service('LinkService', ['$q','$http','$log', function($q,$http,$log){
+
+    function fetch(){
+        var url = `api/links`
+       
+        return $http.get(url)
+                    .then(function(result){
+                        return result.data;
+                    });
+    }
+
+    return {
+        fetch: fetch
+    }
+}])
 
 angular.module('ratel')
 .service('PersonService', ['$q','$http','$log', function($q,$http,$log){
@@ -116,12 +138,85 @@ angular.module('ratel')
 })
 angular.module('ratel')
 .component('home',{
+    bindings: {
+        links: '='
+    },
     templateUrl: 'app/views/home.html',
     controller: function($scope){
-        const ctrl = this;
-        
+        var ctrl = this
+
+        ctrl.$onInit = function(){
+            init();
+        }
+
+
+        var clockDiv = $("#clock"),
+            timeDiv = $("#time"),
+            dayDiv = $("#day"),
+            dateDiv = $("#date"),
+            spacerDiv = $("#spacer"),
+            secondDiv = $("#second"),
+            secondsDiv = $("#seconds"),
+            tickDiv = $("#tick");
+    
+        var bindEvents = function () {
+    
+            setInterval(function () {
+    
+                var datetime = moment();
+    
+                var time = datetime.format("h:mm a").toLowerCase();
+                timeDiv.text(time);
+    
+                var day = datetime.format("dddd");
+                dayDiv.text(day);
+    
+                var date = datetime.format("MMMM Do, YYYY");
+                dateDiv.text(date);
+    
+                var width = clockDiv.width();
+    
+    
+                var second = datetime.format("s");
+    
+                var secondWidth = Math.floor(width / 60);
+                var spacer = second * secondWidth;
+    
+                spacerDiv.width(spacer + "px");
+                tickDiv.width(secondWidth * 2);
+                tickDiv.height(secondWidth * 2);
+                secondsDiv.height(secondWidth);
+    
+            }, 500);
+    
+            $(window).on('resize', function () {
+                resize();
+            });
+    
+        };
+    
+        function resize() {
+            var options = { max: 200 };
+    
+            timeDiv.quickfit(options);
+            dayDiv.quickfit(options);
+            dateDiv.quickfit(options);
+        };
+    
+    
+        function init() {
+    
+            bindEvents();
+            setTimeout(function () {
+                resize();
+            }, 500);
+
+        };
+
+
     }
 })
+
 angular.module('ratel')
 .component('persons',{
     templateUrl: 'app/views/persons.html',
@@ -174,3 +269,4 @@ angular.module('ratel')
         $scope.$watch('$ctrl.queries',query,true)
     }
 })
+//# sourceMappingURL=../maps/app.js.map

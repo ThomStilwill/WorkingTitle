@@ -1,4 +1,11 @@
 {
+    "links":[
+      {"title": "Weather","href":"http://www.intellicast.com/Local/Weather.aspx?location=USCT0169"},
+      {"title": "News","href":"http://www.wfsb.com"},
+      {"title": "Movies","href":"http://www.movies.com/movie-times/06062-movie-times"},
+      {"title": "Plainville Town","href":"http://www.plainvillect.com"},
+      {"title": "CL&P Outages","href":"http://www.cl-p.com/outage/OutageMap.aspx"}
+    ],
     "persons": [
       {
         "id": 0,

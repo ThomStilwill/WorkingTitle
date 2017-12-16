@@ -9,7 +9,12 @@ angular.module('ratel')
    
    var states = [
         {  name: 'home',
-            component: 'home'
+            component: 'home',
+            resolve: {
+                links: function(LinkService){
+                    return LinkService.fetch();
+                }
+            }
         },
         {  name: 'persons',
            component: 'persons',
@@ -33,15 +38,15 @@ angular.module('ratel')
     
   }])
 .run(['$state', '$trace', '$transitions', function($state,$trace,$transitions) {
-    $trace.enable('TRANSITION');
+    //$trace.enable('TRANSITION');
 
     $state.defaultErrorHandler(function() {
         console.log('Default error handler fired!');
     });
 
     $transitions.onStart({}, function(transition) {
-        console.log('Starting transition!');
-        transition.promise.finally(console.log('Transition promise finally fired!'));
+        //console.log('Starting transition!');
+        //transition.promise.finally(console.log('Transition promise finally fired!'));
     });
     $transitions.onError({}, function(transition) {
         console.log('Transition erred!');
