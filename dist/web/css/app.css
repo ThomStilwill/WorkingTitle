@@ -6735,8 +6735,8 @@ body {
   width: 50%;
 }
 #links ul {
-  padding-right: 2em;
-  margin-left: 2em;
+  padding-right: 1em;
+  margin-left: 0;
   list-style: none;
 }
 #links ul li {
@@ -6751,13 +6751,22 @@ body {
   color: #5e5e5e;
   text-decoration: none;
 }
+#links ul li a:after {
+  content: ' ';
+  white-space: pre;
+}
+#links ul li a:before {
+  content: ' ';
+  white-space: pre;
+}
 #links ul li a:hover {
-  font-weight: bold;
-  color: Navy;
+  font-weight: 500;
+  background-color: cornflowerblue;
+  color: #fff;
 }
 #weather {
   position: absolute;
-  bottom: 10px ;
+  bottom: 10px;
   left: 0;
   right: 0;
 }

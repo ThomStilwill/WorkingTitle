@@ -10,14 +10,9 @@
 <div id="links">
     <ul>
         <li ng-repeat="link in $ctrl.links">
-            <a href="{{link.href}}" target="_blank">{{link.title}}</a>
+            <a ng-show="link.href" href="{{link.href}}" target="_blank"> {{link.title}} </a>
+            <div ng-show="link.break">{{link.break}}&nbsp;</div>
         </li>
-
-        <!-- <li><a href="http://www.cl-p.com/outage/OutageMap.aspx" target="_blank">CL&amp;P Outages</a></li>
-        <li><a href="http://www.intellicast.com/Local/Weather.aspx?location=USCT0169" target="_blank">Weather</a></li>
-        <li><a href="http://www.wfsb.com" target="_blank">News</a></li>
-        <li><a href="http://www.movies.com/movie-times/06062-movie-times" target="_blank">Movies</a></li>
-        <li><a href="http://www.plainvillect.com" target="_blank">Town Hall</a></li> -->
     </ul>
 </div>
 

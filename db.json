@@ -1,10 +1,16 @@
 {
     "links":[
       {"title": "Weather","href":"http://www.intellicast.com/Local/Weather.aspx?location=USCT0169"},
-      {"title": "News","href":"http://www.wfsb.com"},
-      {"title": "Movies","href":"http://www.movies.com/movie-times/06062-movie-times"},
+      {"title": "Power Outages","href":"https://www.eversource.com/clp/outage/outagemap.aspx"},
       {"title": "Plainville Town","href":"http://www.plainvillect.com"},
-      {"title": "CL&P Outages","href":"http://www.cl-p.com/outage/OutageMap.aspx"}
+      {"title": "Movies","href":"http://www.movies.com/new-releases"},
+      {"title": "News","href":"http://www.wfsb.com"},
+      {"break": " "},
+      {"title": "Liberty Bank","href":"https://liberty-bank.com"},
+      {"title": "Amazon","href":"http://www.amazon.com"},
+      {"title": "Hulu","href":"http://www.hulu.com"},
+      {"title": "Netflix","href":"http://www.netflix.com"}
+
     ],
     "persons": [
       {
