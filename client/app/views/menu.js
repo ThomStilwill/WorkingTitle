@@ -4,7 +4,9 @@ angular.module('ratel')
     transclude: true,
     replace: true,
     templateUrl: 'app/views/menu.html',
-    controller: function($scope){
+    controller: function($scope,MenuService){
         const ctrl = this;
+
+        ctrl.items = MenuService.fetch()
     }
 })

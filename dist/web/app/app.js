@@ -83,6 +83,21 @@ angular.module('ratel')
 }])
 
 angular.module('ratel')
+.service('MenuService', ['$q','$http','$log', function($q,$http,$log){
+
+    function fetch(id){
+        var url = `api/persons?id=${id}`
+        return $http.get(url)
+                    .then(function(result){
+                        return result.data.length > 0 ? result.data[0] : null;
+                    });
+    }
+
+    return {
+        fetch: fetch
+    }
+}])
+angular.module('ratel')
 .service('PersonService', ['$q','$http','$log', function($q,$http,$log){
 
     function fetch(queries){
@@ -205,13 +220,26 @@ angular.module('ratel')
 })
 
 angular.module('ratel')
+.component('login',{
+    restrict: 'E',
+    transclude: true,
+    replace: true,
+    templateUrl: 'app/views/login.html',
+    controller: function($scope){
+        const ctrl = this;
+
+    }
+})
+angular.module('ratel')
 .component('menu',{
     restrict: 'E',
     transclude: true,
     replace: true,
     templateUrl: 'app/views/menu.html',
-    controller: function($scope){
+    controller: function($scope,MenuService){
         const ctrl = this;
+
+        ctrl.items = MenuService.fetch()
     }
 })
 angular.module('ratel')

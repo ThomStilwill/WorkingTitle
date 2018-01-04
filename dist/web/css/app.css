@@ -7005,7 +7005,6 @@ header {
   width: 100%;
 }
 header #search {
-  width: 300px;
   /*
     .form-group
     {
@@ -7059,6 +7058,9 @@ footer .footer-center {
   left: 100px;
   right: 100px;
   text-align: center;
+}
+#login {
+  padding-right: 15px;
 }
 #login > ul {
   margin: 5px 0 0 5px;
