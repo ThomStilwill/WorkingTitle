@@ -1,11 +1,12 @@
 angular.module('ratel')
-.service('MenuService', ['$q','$http','$log', function($q,$http,$log){
+.service('MenuService', ['$http','$log', function($http,$log){
 
-    function fetch(id){
-        var url = `api/persons?id=${id}`
+    function fetch(){
+        var url = `api/menus`
         return $http.get(url)
                     .then(function(result){
-                        return result.data.length > 0 ? result.data[0] : null;
+                        $log.log(result.data);
+                        return result.data.length > 0 ? result.data : null;
                     });
     }
 

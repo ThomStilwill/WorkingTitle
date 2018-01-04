@@ -7,6 +7,9 @@ angular.module('ratel')
     controller: function($scope,MenuService){
         const ctrl = this;
 
-        ctrl.items = MenuService.fetch()
+        MenuService.fetch()
+            .then(function(menus){
+                ctrl.menus = menus
+            })
     }
 })

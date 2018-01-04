@@ -13,11 +13,20 @@
 
     ],
 
+    "menus":[
+      {"title": "Google", "menus": [
+         {"title":"eMail", "href": "https://mail.google.com"},
+         {"title":"Calendar", "href": "https://calendar.google.com/calendar/r?tab=mc"},
+         {"title":"Drive", "href": "https://drive.google.com"},
+         {"title":"Google+", "href": "https://plus.google.com"},
+         {"title":"Calendar", "href": "https://calendar.google.com/calendar/r?tab=mc"},
+         {"title":"Play Store", "href": "https://play.google.com"},
+         {"title":"Keep", "href": "https://keep.google.com"},
+         {"title":"Photos", "href": "https://photos.google.com"}
+        
+      ]}
+    ],
     
-
-
-
-
     "persons": [
       {
         "id": 0,
