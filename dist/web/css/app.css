@@ -6724,7 +6724,7 @@ button.close {
 
 html,
 body {
-  font-family: Tahoma;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -7071,6 +7071,9 @@ footer .footer-center {
   list-style-position: outside;
 }
 
+menu {
+  display: inline;
+}
 
 .query-container {
   position: relative;

@@ -4,6 +4,7 @@ angular.module('ratel', ['ui.router'])
     $scope.version = '0.0.1'
     $scope.year = (new Date()).getFullYear()
     $scope.theme = "theme-light"
+
 }]);
 
 angular.module('ratel')
@@ -203,6 +204,16 @@ angular.module('ratel')
     }
 })
 
+angular.module('ratel')
+.component('menu',{
+    restrict: 'E',
+    transclude: true,
+    replace: true,
+    templateUrl: 'app/views/menu.html',
+    controller: function($scope){
+        const ctrl = this;
+    }
+})
 angular.module('ratel')
 .component('persons',{
     templateUrl: 'app/views/persons.html',
