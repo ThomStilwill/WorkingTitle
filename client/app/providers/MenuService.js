@@ -5,7 +5,6 @@ angular.module('ratel')
         var url = `api/menus`
         return $http.get(url)
                     .then(function(result){
-                        $log.log(result.data);
                         return result.data.length > 0 ? result.data : null;
                     });
     }

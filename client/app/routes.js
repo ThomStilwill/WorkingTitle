@@ -32,6 +32,10 @@ angular.module('ratel')
             {
                 name: 'clock',
                 component: 'clock'
+            },
+            {
+                name: 'tags',
+                component: 'tags'
             }
         ]
 

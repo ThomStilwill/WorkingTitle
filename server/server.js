@@ -7,7 +7,7 @@ var port = process.env.PORT || 3000;
 
 app.use('/api', jsonServer.router('db.json'));
 //app.use(require('./routes'))
-app.use(express.static('dist/web'))
+app.use(express.static('../dist/web'))
 
 // START THE SERVER
 app.listen(port);

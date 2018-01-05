@@ -1,5 +1,5 @@
 angular.module('ratel')
-.service('LinkService', ['$q','$http','$log', function($q,$http,$log){
+.service('LinkService', ['$q','$http','$log', function($q,$http){
 
     function fetch(){
         var url = `api/links`
@@ -10,7 +10,17 @@ angular.module('ratel')
                     });
     }
 
+    function tags(){
+        var url = `api/tags`
+       
+        return $http.get(url)
+                    .then(function(result){
+                        return result.data;
+                    });
+    }
+
     return {
-        fetch: fetch
+        fetch: fetch,
+        tags: tags
     }
 }])
