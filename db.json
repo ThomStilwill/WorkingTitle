@@ -23,7 +23,15 @@
          {"title":"Play Store", "href": "https://play.google.com"},
          {"title":"Keep", "href": "https://keep.google.com"},
          {"title":"Photos", "href": "https://photos.google.com"}
-        
+      ]},
+      {"title": "Links", "menus": [
+        {"group": "Development"},
+        {"title": "JQuery-UI", "href": "http://jqueryui.com"},
+        {"title": "Angularjs", "href": "https://angularjs.org"}
+      ]},
+      {"title": "Tools", "menus": [
+        {"title": "About", "view": "about"},
+        {"title": "Clock", "view": "clock"}
       ]}
     ],
     
