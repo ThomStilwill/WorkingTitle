@@ -15,6 +15,41 @@ angular.module('ratel')
       var secondsDiv = $('#seconds')
       var tickDiv
 
+      function getTextWidth (text, font) {
+        // if given, use cached canvas for better performance
+        // else, create new canvas
+        var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'))
+        var context = canvas.getContext('2d')
+        context.font = font
+        var metrics = context.measureText(text)
+        return metrics.width
+      }
+
+      function getWidth (text, widthtofit) {
+        var nofit = true
+        var size = 124
+
+        while (nofit) {
+          var testsize = getTextWidth(text, size + 'px san serif')
+          if (testsize < widthtofit) {
+            nofit = false
+          }
+          size--
+        }
+        return size
+      }
+
+      function autoSizeText () {
+        var element = $('.resize')
+
+        var text = element.text()
+        if (text) {
+          var width = getWidth(text, element.width())
+          console.log(width)
+          element.css('font-size', width + 'px')
+        }
+      };
+
       function drawclock () {
         var datetime = moment()
 
@@ -40,10 +75,7 @@ angular.module('ratel')
       }
 
       function resize () {
-        var options = { max: 200 }
-        // timeDiv.quickfit(options)
-        // dayDiv.quickfit(options)
-        // dateDiv.quickfit(options)
+        autoSizeText()
       };
 
       function bindEvents () {
