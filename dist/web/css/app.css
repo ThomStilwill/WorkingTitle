@@ -6815,14 +6815,9 @@ body {
   display: table;
 }
 
-#links {
-  float: right;
-  width: 50%;
-}
 #links ul {
-  padding-right: 1em;
-  margin-left: 0;
   list-style: none;
+  text-align: right;
 }
 #links ul li {
   line-height: 2em;
@@ -6849,6 +6844,42 @@ body {
   background-color: cornflowerblue;
   color: #fff;
 }
+#clock {
+  color: #5e5e5e;
+  font-size: 72px;
+}
+#clock #time {
+  font-size: 1em;
+  line-height: 1em;
+  border: 0px black dotted;
+  white-space: nowrap;
+}
+#clock #seconds {
+  border: 0px dotted black;
+  margin: 0 0 20px 0;
+  line-height: 1em;
+  font-size: 0.2em;
+}
+#clock #seconds #spacer {
+  display: inline-block;
+}
+#clock #seconds #tick {
+  display: inline-block;
+  margin-top: 5px;
+  width: 4px;
+  height: 4px;
+  background-color: cornflowerblue;
+}
+#clock #day {
+  margin-right: 30%;
+  line-height: 1em;
+  font-size: 0.4em;
+}
+#clock #date {
+  margin-top: 10px;
+  line-height: 1em;
+  font-size: 0.4em;
+}
 #weather {
   position: absolute;
   bottom: 10px;
@@ -6857,48 +6888,6 @@ body {
 }
 #weather > span {
   margin: 0 auto;
-}
-#calendar {
-  margin-top: 2em;
-}
-#calendar > iframe {
-  display: block;
-  margin: 0 auto;
-}
-#clock {
-  float: left;
-  border: 0px dotted #e7e7e7;
-  padding: 0 0.5em;
-  width: 40%;
-  color: #5e5e5e;
-}
-#clock #time {
-  font-size: 4em;
-  line-height: 1em;
-  border: 0px black dotted;
-}
-#clock #seconds {
-  height: 0px;
-  border: 0px dotted black;
-  margin: 0 0 20px 0;
-}
-#clock #day {
-  margin-right: 30%;
-  line-height: 1em;
-}
-#clock #date {
-  margin-top: 10px;
-  line-height: 1em;
-  text-wrap: none;
-}
-#spacer {
-  display: inline-block;
-}
-#tick {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: navy;
 }
 
 @media screen and (max-width: 767px) {
@@ -7282,22 +7271,22 @@ body {
 #tag-canvas {
   border: 0px dotted gray;
 }
-a {
+#tag-canvas a {
   border-radius: 10px;
   outline: none;
   font-family: verdana;
 }
-a:link {
+#tag-canvas a:link {
   color: #333333;
 }
-a:visited {
+#tag-canvas a:visited {
   color: #000000;
 }
-a:hover {
+#tag-canvas a:hover {
   color: #000000;
   background-color: #ffdb00;
 }
-a:active {
+#tag-canvas a:active {
   color: #000000;
 }
 
@@ -7361,3 +7350,5 @@ a:active {
   background-color: #d3d3d3;
   border-top: 1px dotted slategray;
 }
+
+/*# sourceMappingURL=../maps/app.css.map */

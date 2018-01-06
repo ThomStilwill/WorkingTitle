@@ -1,10 +1,8 @@
 ﻿#links {
-  float: right;
-  width: 50%;
+
   ul {
-    padding-right: 1em;
-    margin-left: 0;
     list-style: none;
+    text-align: right;
     li {
       line-height: 2em;
       text-align: right;
@@ -37,6 +35,52 @@
   }
 }
 
+#clock {
+  //float: left;
+  color: #5e5e5e;
+  font-size: 72px;
+ 
+
+  #time {
+    font-size: 1em;
+    line-height: 1em;
+    border: 0px black dotted;
+    white-space: nowrap;
+  }
+  
+  #seconds {
+    border: 0px dotted black;
+    margin: 0 0 20px 0;
+    line-height: 1em;
+    font-size: 0.2em;
+
+    #spacer {
+      display: inline-block;
+    }
+    
+    #tick {
+      display: inline-block;
+      margin-top: 5px;
+      width: 4px;
+      height: 4px;
+      background-color: cornflowerblue;
+    }
+  }
+
+  #day {
+    margin-right: 30%;
+    line-height: 1em;
+    font-size: 0.4em;
+  }
+
+  #date {
+    margin-top: 10px;
+    line-height: 1em;
+    font-size: 0.4em;
+  }
+  
+}
+
 #weather {
   position: absolute;
   bottom: 10px;
@@ -45,50 +89,4 @@
   >span {
     margin: 0 auto;
   }
-}
-
-#calendar {
-  margin-top: 2em;
-  >iframe {
-    display: block;
-    margin: 0 auto;
-  }
-}
-
-#clock {
-  float: left;
-  border: 0px dotted #e7e7e7;
-  padding: 0 0.5em;
-  width: 40%;
-  color: #5e5e5e;
-  #time {
-    font-size: 4em;
-    line-height: 1em;
-    border: 0px black dotted;
-  }
-  #seconds {
-    height: 0px;
-    border: 0px dotted black;
-    margin: 0 0 20px 0;
-  }
-  #day {
-    margin-right: 30%;
-    line-height: 1em;
-  }
-  #date {
-    margin-top: 10px;
-    line-height: 1em;
-    text-wrap: none;
-  }
-}
-
-#spacer {
-  display: inline-block;
-}
-
-#tick {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: navy;
 }

@@ -1,17 +1,14 @@
-var gulp = require('gulp'),
-  pump = require('pump'),
-  watch = require('gulp-watch'),
-  concat = require('gulp-concat'),
-  sourcemaps = require('gulp-sourcemaps'),
-  path = require('path'),
-  fs = require('fs'),
-  less = require('gulp-less'),
-  clean = require('gulp-clean-dest'),
-  distfolderweb = 'dist/web/'
-distfolderserver = 'dist/server/'
+var gulp = require('gulp')
+var pump = require('pump')
+var concat = require('gulp-concat')
+var sourcemaps = require('gulp-sourcemaps')
+var less = require('gulp-less')
+var clean = require('gulp-clean-dest')
+var distfolder = 'dist/'
+var distfolderweb = distfolder + 'web/'
+var distfolderserver = distfolder + 'server/'
 
-gulp.task('default', ['server', 'app', 'content', 'less', 'libs', 'fonts'], function () {
-
+gulp.task('default', ['tools', 'server', 'app', 'content', 'less', 'libs', 'fonts'], function () {
 })
 
 gulp.task('watch', ['default'], function () {
@@ -40,8 +37,8 @@ gulp.task('fonts', function (cb) {
 })
 
 gulp.task('cleancss', function (cb) {
-  // var dest = distfolder + 'css';
-  // return clean(dest,null,{force: true});
+  var dest = distfolderweb + 'css'
+  return clean(dest, null, {force: true})
 })
 
 gulp.task('less', function (cb) {
@@ -51,22 +48,13 @@ gulp.task('less', function (cb) {
     gulp.src([ 'node_modules/bootstrap/less/bootstrap.less',
       'client/less/*.less'
     ]),
+    sourcemaps.init(),
     less(),
     concat('app.css'),
+    sourcemaps.write('../maps'),
     gulp.dest(dest)
   ], cb)
 })
-
-// gulp.task('css', function(cb){
-//     var dest = distfolder + 'css';
-
-//     pump([
-//         gulp.src([]),
-//         less(),
-//         concat('libs.css'),
-//         gulp.dest(dest)
-//     ],cb)
-// })
 
 gulp.task('cleanlibs', function (cb) {
   var dest = distfolderweb + 'scripts'
@@ -114,7 +102,7 @@ gulp.task('app', ['app-templates'], function (cb) {
   ], cb)
 })
 
-gulp.task('server', [], function (cb) {
+gulp.task('server', function (cb) {
   var dest = distfolderserver
 
   pump([
@@ -123,11 +111,22 @@ gulp.task('server', [], function (cb) {
   ], cb)
 })
 
+gulp.task('tools', function (cb) {
+  var dest = distfolder
+
+  pump([
+    gulp.src(['package.json', 'restart.cmd']),
+    gulp.dest(dest)
+  ], cb)
+})
+
 gulp.task('deploy', function (cb) {
   var deployTarget = '\\\\mars\\node_apps\\web'
 
   pump([
-    gulp.src(['dist/**/*.*']),
+    clean(deployTarget + 'web', null, {force: true}),
+    clean(deployTarget + 'server', null, {force: true}),
+    gulp.src(['dist/**/*.*', 'package.json', 'restart.cmd']),
     gulp.dest(deployTarget)
   ], cb)
 })

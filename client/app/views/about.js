@@ -1,8 +1,7 @@
 angular.module('ratel')
-.component('about',{
+  .component('about', {
     templateUrl: 'app/views/about.html',
-    controller: function($scope){
-        const ctrl = this;
-        
+    controller: function ($scope) {
+      const ctrl = this
     }
-})
+  })

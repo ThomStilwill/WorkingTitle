@@ -1,66 +1,60 @@
 angular.module('ratel')
-.component('home',{
+  .component('home', {
     bindings: {
-        links: '='
+      links: '='
     },
     templateUrl: 'app/views/home.html',
-    controller: function($scope){
-        var ctrl = this
+    controller: function ($scope) {
+      var ctrl = this
 
-        ctrl.$onInit = function(){
-            init();
-        }
+      var clockDiv = $('#clock')
+      var timeDiv = $('#time')
+      var dayDiv = $('#day')
+      var dateDiv = $('#date')
+      var spacerDiv = $('#spacer')
+      var secondsDiv = $('#seconds')
+      var tickDiv
 
-        var clockDiv = $("#clock"),
-            timeDiv = $("#time"),
-            dayDiv = $("#day"),
-            dateDiv = $("#date"),
-            spacerDiv = $("#spacer"),
-            secondDiv = $("#second"),
-            secondsDiv = $("#seconds"),
-            tickDiv = $("#tick");
-    
-        function drawclock(){
-            var datetime = moment();
-    
-            var time = datetime.format("h:mm a").toLowerCase();
-            timeDiv.text(time);
+      function drawclock () {
+        var datetime = moment()
 
-            var day = datetime.format("dddd");
-            dayDiv.text(day);
+        var time = datetime.format('h:mm a').toLowerCase()
+        timeDiv.text(time)
 
-            var date = datetime.format("MMMM Do, YYYY");
-            dateDiv.text(date);
+        var day = datetime.format('dddd')
+        dayDiv.text(day)
 
-            var width = clockDiv.width();
-            var second = datetime.format("s");
+        var date = datetime.format('MMMM Do, YYYY')
+        dateDiv.text(date)
 
-            var secondWidth = Math.floor(width / 60);
-            var spacer = second * secondWidth;
+        var width = clockDiv.width()
+        var second = datetime.format('s')
 
-            spacerDiv.width(spacer + "px");
-            tickDiv.width(secondWidth * 2);
-            tickDiv.height(secondWidth * 2);
-            secondsDiv.height(secondWidth);
-        }
+        var secondWidth = Math.floor(width / 60)
+        var spacer = second * secondWidth
 
-        function resize() {
-            var options = { max: 200 };
-            timeDiv.quickfit(options);
-            dayDiv.quickfit(options);
-            dateDiv.quickfit(options);
-        };
+        spacerDiv.width(spacer + 'px')
+        tickDiv.width(secondWidth * 2)
+        tickDiv.height(secondWidth * 2)
+        secondsDiv.height(secondWidth)
+      }
 
-        function bindEvents() {
-            setInterval(drawclock, 500);
-            $(window).on('resize', resize);
-        };
-    
-        function init() {
-            bindEvents();
-            setTimeout(function () {
-                resize();
-            }, 500);
-        };
+      function resize () {
+        var options = { max: 200 }
+        // timeDiv.quickfit(options)
+        // dayDiv.quickfit(options)
+        // dateDiv.quickfit(options)
+      };
+
+      function bindEvents () {
+        setInterval(drawclock, 500)
+        $(window).on('resize', resize)
+      };
+
+      ctrl.$onInit = function () {
+        tickDiv = $('#tick')
+        bindEvents()
+        resize()
+      }
     }
-})
+  })
