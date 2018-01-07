@@ -2,6 +2,7 @@ var gulp = require('gulp')
 var pump = require('pump')
 var concat = require('gulp-concat')
 var sourcemaps = require('gulp-sourcemaps')
+var Server = require('karma').Server
 var less = require('gulp-less')
 var clean = require('gulp-clean-dest')
 var distfolder = 'dist/'
@@ -118,6 +119,12 @@ gulp.task('tools', function (cb) {
     gulp.src(['package.json', 'restart.cmd']),
     gulp.dest(dest)
   ], cb)
+})
+
+gulp.task('tdd', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+  }, done).start()
 })
 
 gulp.task('deploy', function (cb) {

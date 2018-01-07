@@ -1,6 +1,9 @@
 {
     "extends": "standard",
     "globals": {
-        "angular": true
+        "angular": true,
+        "describe": true,
+        "it" : true,
+        "expect": true
     } 
 }

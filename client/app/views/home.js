@@ -27,28 +27,47 @@ angular.module('ratel')
 
       function getWidth (text, widthtofit) {
         var nofit = true
-        var size = 124
+        var size = 6 * 30
 
         while (nofit) {
           var testsize = getTextWidth(text, size + 'px san serif')
           if (testsize < widthtofit) {
             nofit = false
           }
-          size--
+          size = size - 6
         }
         return size
       }
 
-      function autoSizeText () {
-        var element = $('.resize')
+      // function getWidth (text, widthtofit, size, bracketsize) {
+      //   if (!bracketsize) {
+      //     bracketsize = size
+      //   }
+      //   var testsize = getTextWidth(text, size + 'px san serif')
 
-        var text = element.text()
-        if (text) {
-          var width = getWidth(text, element.width())
-          console.log(width)
-          element.css('font-size', width + 'px')
+      //   if (testsize === widthtofit) {
+      //     return testsize
+      //   }
+
+      //   if (testsize < widthtofit) { 
+      //     sizeadjustment = 
+      //     return getWidth (text, widthtofit, sizeadjustment, bracketsize / 2 ) 
+      //   }
+      // }
+
+      function autoSizeText () {
+        var elements = $('.resize')
+
+        for (var i = 0; i < elements.length; i++) {
+          var element = $(elements[i])
+          var text = element.text()
+          if (text) {
+            var width = getWidth(text, element.width())
+            console.log(width)
+            element.css('font-size', width + 'px')
+          }
         }
-      };
+      }
 
       function drawclock () {
         var datetime = moment()
@@ -79,6 +98,7 @@ angular.module('ratel')
       };
 
       function bindEvents () {
+        drawclock()
         setInterval(drawclock, 500)
         $(window).on('resize', resize)
       };
