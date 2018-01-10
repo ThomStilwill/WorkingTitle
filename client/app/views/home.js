@@ -25,7 +25,7 @@ angular.module('ratel')
         return metrics.width
       }
 
-      function getWidth (text, widthtofit) {
+      function getWidth_ (text, widthtofit) {
         var nofit = true
         var size = 6 * 30
 
@@ -39,21 +39,24 @@ angular.module('ratel')
         return size
       }
 
-      // function getWidth (text, widthtofit, size, bracketsize) {
-      //   if (!bracketsize) {
-      //     bracketsize = size
-      //   }
-      //   var testsize = getTextWidth(text, size + 'px san serif')
+      function getWidth (text, widthoffit, bracketsize) {
+        var min = 10
 
-      //   if (testsize === widthtofit) {
-      //     return testsize
-      //   }
+        function testfit (size) {
+          var testsize = getTextWidth(text, size + 'px san serif')
+          if (widthoffit - testsize < 20 && testsize < widthoffit) {
+            return 0
+          }
 
-      //   if (testsize < widthtofit) { 
-      //     sizeadjustment = 
-      //     return getWidth (text, widthtofit, sizeadjustment, bracketsize / 2 ) 
-      //   }
-      // }
+          if (testsize < widthoffit) {
+            return 1
+          } else {
+            return -1
+          }
+        }
+
+        return util.search(testfit, 12, 300)
+      }
 
       function autoSizeText () {
         var elements = $('.resize')

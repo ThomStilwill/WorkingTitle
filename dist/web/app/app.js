@@ -158,6 +158,34 @@ angular.module('ratel')
     }
   }])
 
+var util = (function () {
+
+  function traverse (testFn, min, max) {
+    var median = Math.floor((max - min + 1) / 2) + min
+    var result = testFn(median)
+
+    console.log(median)
+
+    if (result === 0 || min === max) {
+      return median
+    }
+
+    if (result > 0) {
+      return traverse(testFn, median, max)
+    } else {
+      return traverse(testFn, min, median)
+    }
+  }
+
+  function search (testFn, min, max) {
+    return traverse(testFn, min, max)
+  }
+
+  return {
+    search: search
+  }
+})()
+
 angular.module('ratel')
   .component('about', {
     templateUrl: 'app/views/about.html',
@@ -288,7 +316,7 @@ angular.module('ratel')
         return metrics.width
       }
 
-      function _getWidth (text, widthtofit) {
+      function getWidth_ (text, widthtofit) {
         var nofit = true
         var size = 6 * 30
 
@@ -302,16 +330,23 @@ angular.module('ratel')
         return size
       }
 
-      function getWidth (text, widthtofit, size) {
-        var testsize = getTextWidth(text, size + 'px san serif')
+      function getWidth (text, widthoffit, bracketsize) {
+        var min = 10
 
-        if (testsize === widthtofit) {
-          return testsize
+        function testfit (size) {
+          var testsize = getTextWidth(text, size + 'px san serif')
+          if (widthoffit - testsize < 20 && testsize < widthoffit) {
+            return 0
+          }
+
+          if (testsize < widthoffit) {
+            return 1
+          } else {
+            return -1
+          }
         }
 
-        if (testsize < widthtofit) {
-          nofit = false
-        }
+        return util.search(testfit, 12, 300)
       }
 
       function autoSizeText () {

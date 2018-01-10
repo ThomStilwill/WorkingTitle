@@ -4,12 +4,17 @@ var concat = require('gulp-concat')
 var sourcemaps = require('gulp-sourcemaps')
 var Server = require('karma').Server
 var less = require('gulp-less')
-var clean = require('gulp-clean-dest')
+var clean = require('gulp-clean')
+var notify = require('gulp-notify')
+
 var distfolder = 'dist/'
 var distfolderweb = distfolder + 'web/'
 var distfolderserver = distfolder + 'server/'
+var deployTarget = '\\\\mars\\node_apps\\web'
 
-gulp.task('default', ['tools', 'server', 'app', 'content', 'less', 'libs', 'fonts'], function () {
+gulp.task('default', ['tools', 'server', 'app', 'content', 'less', 'libs', 'fonts'], function (cb) {
+  // return gulp
+  //   .pipe(notify({ message: 'default task complete' }))
 })
 
 gulp.task('watch', ['default'], function () {
@@ -39,7 +44,7 @@ gulp.task('fonts', function (cb) {
 
 gulp.task('cleancss', function (cb) {
   var dest = distfolderweb + 'css'
-  return clean(dest, null, {force: true})
+  return clean(dest, {force: true})
 })
 
 gulp.task('less', function (cb) {
@@ -82,11 +87,20 @@ gulp.task('libs', function (cb) {
   ], cb)
 })
 
-gulp.task('app-templates', function (cb) {
+gulp.task('clean-app', function (cb) {
   var dest = distfolderweb + 'app'
 
   pump([
-    gulp.src(['client/app/**/*.html', 'client/app/**/*.json']),
+    gulp.src([dest + '**/*.*']),
+    clean({force: true})
+  ], cb)
+})
+
+gulp.task('app-templates', ['clean-app'], function (cb) {
+  var dest = distfolderweb + 'app'
+
+  pump([
+    gulp.src(['client/app/**/*.html']),
     gulp.dest(dest)
   ], cb)
 })
@@ -95,7 +109,7 @@ gulp.task('app', ['app-templates'], function (cb) {
   var dest = distfolderweb + 'app'
 
   pump([
-    gulp.src(['client/app/**/*.js']),
+    gulp.src(['client/app/**/*.js', '!client/app/**/*.spec.js']),
     sourcemaps.init(),
     concat('app.js'),
     sourcemaps.write('../maps'),
@@ -123,16 +137,20 @@ gulp.task('tools', function (cb) {
 
 gulp.task('tdd', function (done) {
   new Server({
-    configFile: __dirname + '/karma.conf.js',
+    configFile: __dirname + '/karma.conf.js'
   }, done).start()
 })
 
-gulp.task('deploy', function (cb) {
-  var deployTarget = '\\\\mars\\node_apps\\web'
+gulp.task('cleandeploy', function (cb) {
+  // deployTarget + 'server', {force: true}
+  // pump([
+  //   gulp.src([deployTarget + 'web/' + '**/*.*']),
+  //   clean({force: true})
+  // ], cb)
+})
 
+gulp.task('deploy', function (cb) {
   pump([
-    clean(deployTarget + 'web', null, {force: true}),
-    clean(deployTarget + 'server', null, {force: true}),
     gulp.src(['dist/**/*.*', 'package.json', 'restart.cmd']),
     gulp.dest(deployTarget)
   ], cb)
