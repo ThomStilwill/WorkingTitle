@@ -70,6 +70,7 @@ gulp.task('libs', function (cb) {
 
   pump([
     gulp.src(['node_modules/angular/angular.min.js',
+      'node_modules/angular-messages/angular-messages.min.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',

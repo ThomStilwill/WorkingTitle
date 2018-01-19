@@ -1,4 +1,4 @@
-angular.module('ratel', ['ui.router'])
+angular.module('ratel', ['ui.router', 'ngMessages'])
   .controller('basecontroller', ['$scope', function ($scope) {
     $scope.title = 'Stilwill.net'
     $scope.version = '0.0.1'
@@ -410,6 +410,14 @@ angular.module('ratel')
     templateUrl: 'app/views/login.html',
     controller: function ($scope) {
       const ctrl = this
+
+      ctrl.submit = function (form) {
+        if (form.$invalid) {
+          console.log('invalid: ', form.$error)
+          return
+        }
+        console.log(form)
+      }
     }
   })
 
