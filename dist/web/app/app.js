@@ -160,25 +160,23 @@ angular.module('ratel')
 
 var util = (function () {
 
-  function traverse (testFn, min, max) {
+  function traverse (testFn, min, max, lower, upper) {
     var median = Math.floor((max - min + 1) / 2) + min
-    var result = testFn(median)
+    var result = testFn(median, lower, upper)
 
-    console.log(median)
-
-    if (result === 0 || min === max) {
+    if (result === 0 || min > max - 1 || result >= min || median === min + 1) {
       return median
     }
 
     if (result > 0) {
-      return traverse(testFn, median, max)
+      return traverse(testFn, median, max, lower, upper)
     } else {
-      return traverse(testFn, min, median)
+      return traverse(testFn, min, median, lower, upper)
     }
   }
 
   function search (testFn, min, max) {
-    return traverse(testFn, min, max)
+    return traverse(testFn, min, max, min, max)
   }
 
   return {
@@ -316,26 +314,14 @@ angular.module('ratel')
         return metrics.width
       }
 
-      function getWidth_ (text, widthtofit) {
-        var nofit = true
-        var size = 6 * 30
-
-        while (nofit) {
+      function getWidth (text, widthoffit) {
+        function testfit (size, lower, upper) {
           var testsize = getTextWidth(text, size + 'px san serif')
-          if (testsize < widthtofit) {
-            nofit = false
+          if (widthoffit - testsize < 20 && testsize < widthoffit || testsize === lower + 1) {
+            return 0
           }
-          size = size - 6
-        }
-        return size
-      }
 
-      function getWidth (text, widthoffit, bracketsize) {
-        var min = 10
-
-        function testfit (size) {
-          var testsize = getTextWidth(text, size + 'px san serif')
-          if (widthoffit - testsize < 20 && testsize < widthoffit) {
+          if (size === lower || size === upper) {
             return 0
           }
 
@@ -346,7 +332,7 @@ angular.module('ratel')
           }
         }
 
-        return util.search(testfit, 12, 300)
+        return util.search(testfit, 40, 300)
       }
 
       function autoSizeText () {

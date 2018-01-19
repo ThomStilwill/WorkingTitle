@@ -12,16 +12,10 @@ var distfolderweb = distfolder + 'web/'
 var distfolderserver = distfolder + 'server/'
 var deployTarget = '\\\\mars\\node_apps\\web'
 
-gulp.task('default', ['tools', 'server', 'app', 'content', 'less', 'libs', 'fonts'], function (cb) {
-  // return gulp
-  //   .pipe(notify({ message: 'default task complete' }))
-})
+gulp.task('default', ['tools', 'server', 'app', 'content', 'less', 'libs', 'fonts'])
 
 gulp.task('watch', ['default'], function () {
-  return gulp.watch(['less/**/*.less',
-    'client/**/*.*'
-  ]
-    , ['default'])
+  gulp.watch(['less/**/*.less', 'client/**/*.*'], ['default'])
 })
 
 gulp.task('content', function (cb) {
