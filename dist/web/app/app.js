@@ -43,6 +43,10 @@ angular.module('ratel')
     {
       name: 'tags',
       component: 'tags'
+    },
+    {
+      name: 'login',
+      component: 'login'
     }
     ]
 
@@ -187,6 +191,17 @@ var util = (function () {
 angular.module('ratel')
   .component('about', {
     templateUrl: 'app/views/about.html',
+    controller: function ($scope) {
+      const ctrl = this
+    }
+  })
+
+angular.module('ratel')
+  .component('account', {
+    restrict: 'E',
+    transclude: true,
+    replace: true,
+    templateUrl: 'app/views/account.html',
     controller: function ($scope) {
       const ctrl = this
     }
@@ -343,7 +358,6 @@ angular.module('ratel')
           var text = element.text()
           if (text) {
             var width = getWidth(text, element.width())
-            console.log(width)
             element.css('font-size', width + 'px')
           }
         }
@@ -393,9 +407,6 @@ angular.module('ratel')
 
 angular.module('ratel')
   .component('login', {
-    restrict: 'E',
-    transclude: true,
-    replace: true,
     templateUrl: 'app/views/login.html',
     controller: function ($scope) {
       const ctrl = this

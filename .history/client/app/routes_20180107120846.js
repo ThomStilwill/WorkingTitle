@@ -35,10 +35,6 @@ angular.module('ratel')
     {
       name: 'tags',
       component: 'tags'
-    },
-    {
-      name: 'login',
-      component: 'login'
     }
     ]
 

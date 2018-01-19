@@ -54,6 +54,7 @@ angular.module('ratel')
           var text = element.text()
           if (text) {
             var width = getWidth(text, element.width())
+            console.log(width)
             element.css('font-size', width + 'px')
           }
         }
