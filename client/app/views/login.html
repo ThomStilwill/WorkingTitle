@@ -2,9 +2,11 @@
     <form name="loginform" novalidate ng-submit="$ctrl.submit(loginform)">
         <div class="col-xs-6 col-xs-offset-3">
 
-            <div class="alert alert-danger" ng-show="showFormError()">Please fix errors.</div>
+            <div class="banner">
+                <div class="alert-danger" ng-show="showFormError()">Please fix errors.</div>
+            </div>
 
-            <h3>{{$ctrl.title}}</h3>
+            <div class="form-title">{{$ctrl.title}}</div>
 
             <input-text name="username" label="User Name" placeholder="User Name" tooltip="User name or email" value="$ctrl.username"
                 required="true" form="loginform">
