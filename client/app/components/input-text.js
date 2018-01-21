@@ -9,6 +9,7 @@ angular.module('ratel')
       tooltip: '@',
       required: '@',
       minLength: '@',
+      pattern: '@',
       value: '=',
       onChange: '&',
       submitted: '<',
