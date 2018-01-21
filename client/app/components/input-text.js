@@ -9,8 +9,6 @@ angular.module('ratel')
       tooltip: '@',
       required: '@',
       minLength: '@',
-      maxLength: '@',
-      helpText: '@',
       value: '=',
       onChange: '&',
       submitted: '<',
@@ -25,6 +23,10 @@ angular.module('ratel')
           name: ctrl.name,
           value: ctrl.internalValue
         })
+      }
+
+      ctrl.showError = function () {
+        return ctrl.form[ctrl.name].$invalid && (ctrl.form[ctrl.name].$dirty || ctrl.form.$submitted)
       }
 
       ctrl.$onInit = function () {

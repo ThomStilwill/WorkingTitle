@@ -94,6 +94,20 @@ angular.module('ratel')
   )
 
 angular.module('ratel')
+  .component('inputMessages', {
+    templateUrl: 'app/components/input-messages.html',
+    bindings: {
+      name: '<',
+      form: '<',
+      label: '@',
+      showError: '<'
+    },
+    controller: function ($window) {
+      const ctrl = this
+    }
+  })
+
+angular.module('ratel')
   .component('inputText', {
     templateUrl: 'app/components/input-text.html',
     require: {parentform: '^form'},
@@ -104,8 +118,6 @@ angular.module('ratel')
       tooltip: '@',
       required: '@',
       minLength: '@',
-      maxLength: '@',
-      helpText: '@',
       value: '=',
       onChange: '&',
       submitted: '<',
@@ -120,6 +132,10 @@ angular.module('ratel')
           name: ctrl.name,
           value: ctrl.internalValue
         })
+      }
+
+      ctrl.showError = function () {
+        return ctrl.form[ctrl.name].$invalid && (ctrl.form[ctrl.name].$dirty || ctrl.form.$submitted)
       }
 
       ctrl.$onInit = function () {

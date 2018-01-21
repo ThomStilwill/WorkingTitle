@@ -1,5 +1,5 @@
 <div class="form-group"
-    ng-class="{'has-error': $ctrl.form[$ctrl.name].$invalid && ($ctrl.form[$ctrl.name].$dirty || $ctrl.form.$submitted)}">
+    ng-class="{'has-error': $ctrl.showError()}">
 
     <input-label name="{{$ctrl.name}}" 
                  label="{{$ctrl.label}}"
@@ -14,12 +14,10 @@
            ng-minlength="$ctrl.minLength"  
            ng-model="$ctrl.internalValue"
            ng-change="$ctrl.change()">
-    
-    <ng-messages class="help-block" 
-        for="$ctrl.form[$ctrl.name].$error"
-        ng-show="$ctrl.form[$ctrl.name].$invalid && ($ctrl.form[$ctrl.name].$dirty || $ctrl.form.$submitted)">
-        <ng-message when="required">{{$ctrl.label}} is required.</ng-message>
-        <ng-message when="minlength">{{$ctrl.label}} must be at least {{$ctrl.minLength}} characters.</ng-message>
-    </ng-messages>
-
+  
+    <input-messages form="$ctrl.form"  
+                    name="$ctrl.name"
+                    label="{{$ctrl.label}}"
+                    show-error="ctrl.showError()">
+    </input-messages>
 </div>
