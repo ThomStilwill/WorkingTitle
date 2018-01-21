@@ -2,7 +2,7 @@
     <form name="loginform" novalidate ng-submit="$ctrl.submit(loginform)">
         <div class="col-xs-6 col-xs-offset-3">
 
-            <div class="alert alert-danger" ng-show="loginform.$invalid">Please fix errors.</div>
+            <div class="alert alert-danger" ng-show="showFormError()">Please fix errors.</div>
             
             <input-text name="username"
                         label="User Name"

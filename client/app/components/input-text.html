@@ -1,5 +1,5 @@
 <div class="form-group"
-    ng-class="{'has-error': $ctrl.form[$ctrl.name].$invalid}" >
+    ng-class="{'has-error': $ctrl.form[$ctrl.name].$invalid && ($ctrl.form[$ctrl.name].$dirty || $ctrl.form.$submitted)}">
 
     <input-label name="{{$ctrl.name}}" 
                  label="{{$ctrl.label}}"
