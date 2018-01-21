@@ -31,12 +31,13 @@ gulp.task('fonts', function (cb) {
   var dest = distfolderweb + 'fonts'
 
   pump([
-    gulp.src(['node_modules/bootstrap/dist/fonts/*.*']),
+    gulp.src(['node_modules/bootstrap/dist/fonts/*.*',
+      'node_modules/font-awesome/fonts/*.*']),
     gulp.dest(dest)
   ], cb)
 })
 
-gulp.task('cleancss', function (cb) {
+gulp.task('cleancss', function (cb) {   
   var dest = distfolderweb + 'css'
   return clean(dest, {force: true})
 })
@@ -46,6 +47,8 @@ gulp.task('less', function (cb) {
 
   pump([
     gulp.src([ 'node_modules/bootstrap/less/bootstrap.less',
+      'node_modules/font-awesome/less/font-awesome.less',
+      // 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
       'client/less/*.less'
     ]),
     sourcemaps.init(),
@@ -72,6 +75,7 @@ gulp.task('libs', function (cb) {
     gulp.src(['node_modules/angular/angular.min.js',
       'node_modules/angular-messages/angular-messages.min.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+      'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',
       'node_modules/moment/moment.js',

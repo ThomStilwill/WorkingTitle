@@ -1,10 +1,14 @@
-angular.module('ratel', ['ui.router', 'ngMessages'])
+angular.module('ratel', ['ui.router', 'ngMessages', 'ui.bootstrap'])
   .controller('basecontroller', ['$scope', function ($scope) {
     $scope.title = 'Stilwill.net'
     $scope.version = '0.0.1'
     $scope.year = (new Date()).getFullYear()
     $scope.theme = 'theme-light'
   }])
+  .config(function ($uibTooltipProvider) {
+    $uibTooltipProvider.options({
+    })
+  })
 
 angular.module('ratel')
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -72,8 +76,76 @@ angular.module('ratel')
       console.log('Transition erred!')
     })
 
-    $state.go('home')
+    $state.go('login')
   }])
+
+angular.module('ratel')
+  .component('inputLabel', {
+    transclude: true,
+    templateUrl: 'app/components/input-label.html',
+    bindings: {
+      name: '@',
+      label: '@',
+      tooltip: '@'
+    },
+    controller: function ($element) {
+    }
+  }
+  )
+
+angular.module('ratel')
+  .component('inputText', {
+    templateUrl: 'app/components/input-text.html',
+    require: {parentform: '^form'},
+    bindings: {
+      name: '@',
+      label: '@',
+      placeholder: '@',
+      tooltip: '@',
+      required: '@',
+      minLength: '@',
+      maxLength: '@',
+      helpText: '@',
+      value: '=',
+      onChange: '&',
+      submitted: '<',
+      form: '<'
+    },
+    controller: function ($window) {
+      const ctrl = this
+
+      ctrl.change = function () {
+        ctrl.value = ctrl.internalValue
+        ctrl.onChange({
+          name: ctrl.name,
+          value: ctrl.internalValue
+        })
+      }
+
+      ctrl.$onInit = function () {
+        ctrl.elementId = $window.angular.copy(ctrl.name)
+        ctrl.form = ctrl.parentform
+      }
+
+      ctrl.$onChanges = function (changes) {
+        if (changes.value) {
+          ctrl.internalValue = $window.angular.copy(ctrl.value)
+        }
+      }
+    }
+  })
+
+angular.module('ratel')
+  .component('tooltip', {
+    transclude: true,
+    templateUrl: 'app/components/tooltip.html',
+    bindings: {
+      content: '@'
+    },
+    controller: function () {
+    }
+  }
+  )
 
 angular.module('ratel')
   .service('LinkService', ['$q', '$http', '$log', function ($q, $http) {

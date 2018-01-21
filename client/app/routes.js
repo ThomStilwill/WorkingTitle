@@ -64,5 +64,5 @@ angular.module('ratel')
       console.log('Transition erred!')
     })
 
-    $state.go('home')
+    $state.go('login')
   }])
