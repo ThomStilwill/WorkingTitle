@@ -1,6 +1,6 @@
 <ng-messages class="help-block" 
             for="$ctrl.form[$ctrl.name].$error"
-            xng-show="$ctrl.showError()">
+            ng-show="$ctrl.showError()">
     <ng-message when="required">{{$ctrl.label}} is required.</ng-message>
     <ng-message when="minlength">{{$ctrl.label}} must be at least {{$ctrl.minLength}} characters.</ng-message>
     <ng-message when="maxlength">{{$ctrl.label}} must be no more than {{$ctrl.minLength}} characters.</ng-message>

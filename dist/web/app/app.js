@@ -100,10 +100,9 @@ angular.module('ratel')
       name: '<',
       form: '<',
       label: '@',
-      showError: '<'
+      showError: '&'
     },
-    controller: function ($window) {
-      const ctrl = this
+    controller: function () {
     }
   })
 
@@ -114,7 +113,7 @@ angular.module('ratel')
     bindings: {
       name: '@',
       label: '@',
-      options: '<',
+      options: '=',
       placeholder: '@',
       tooltip: '@',
       required: '@',

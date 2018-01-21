@@ -5,7 +5,7 @@ angular.module('ratel')
     bindings: {
       name: '@',
       label: '@',
-      options: '<',
+      options: '=',
       placeholder: '@',
       tooltip: '@',
       required: '@',

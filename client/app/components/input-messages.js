@@ -5,9 +5,8 @@ angular.module('ratel')
       name: '<',
       form: '<',
       label: '@',
-      showError: '<'
+      showError: '&'
     },
-    controller: function ($window) {
-      const ctrl = this
+    controller: function () {
     }
   })

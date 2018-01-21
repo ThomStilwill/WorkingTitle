@@ -22,12 +22,12 @@
                     </input-text>
                 </div>
 
-                <div class="col-xs-2">
-                    <input-select name="state" label="State" value="$ctrl.state" option="$ctrl.states" required="true">
+                <div class="col-xs-3">
+                    <input-select name="state" label="State" value="$ctrl.state" options="$ctrl.states" required="true">
                     </input-select>
                 </div>
 
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <input-text name="zip" label="Zip" value="$ctrl.zip" pattern="" required="true">
                     </input-text>
                 </div>
@@ -37,7 +37,6 @@
 
             <hr/>
             <pre>{{$ctrl | json}}</pre>
-            <pre>{{$ctrl.form | json}}</pre>
 
         </div>
     </form>
