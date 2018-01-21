@@ -4,6 +4,8 @@
 
             <div class="alert alert-danger" ng-show="showFormError()">Please fix errors.</div>
 
+            <h3>{{$ctrl.title}}</h3>
+
             <input-text name="username" label="User Name" placeholder="User Name" tooltip="User name or email" value="$ctrl.username"
                 required="true" form="loginform">
             </input-text>
@@ -35,8 +37,7 @@
 
             <button type="submit" class="btn btn-primary">Login</button>
 
-            <hr/>
-            <pre>{{$ctrl | json}}</pre>
+            <!-- <hr/> <pre>{{$ctrl | json}}</pre> -->
 
         </div>
     </form>

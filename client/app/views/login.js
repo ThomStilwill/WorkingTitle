@@ -1,10 +1,12 @@
 angular.module('ratel')
   .component('login', {
     templateUrl: 'app/views/login.html',
-    controller: function ($scope) {
+    controller: function ($scope, $filter) {
       const ctrl = this
 
       ctrl.$onInit = function () {
+        ctrl.title = 'Login'
+
         ctrl.states = [
           {key: 'CT', value: 'Connecticut'},
           {key: 'MA', value: 'Massechusetts'},
@@ -19,7 +21,7 @@ angular.module('ratel')
           console.log('invalid: ', form.$error)
           return
         }
-        console.log(form)
+        console.log($filter('json')(ctrl))
       }
     }
   })
