@@ -1,0 +1,25 @@
+<div class="form-group"
+    ng-class="{'has-error': $ctrl.showError()}">
+
+    <input-label name="{{$ctrl.name}}" 
+                 label="{{$ctrl.label}}"
+                 tooltip="{{$ctrl.tooltip}}">
+    </input-label>
+
+    <select class="form-control"        
+            name="{{$ctrl.name}}" 
+            placeholder="{{$ctrl.placeholder}}"
+            ng-required="$ctrl.required" 
+            ng-minlength="$ctrl.minLength"  
+            ng-model="$ctrl.internalValue"
+            ng-change="$ctrl.change()">
+        <option ng-if="$ctrl.placeholder" ng-selected="true" disabled value="{{$ctrl.placeholder}}"></option>
+        <option ng-repeat="option in $ctrl.options" value="{{option.key}}">{{option.value}}</option>
+    </select>
+  
+    <input-messages form="$ctrl.form"  
+                    name="$ctrl.name"
+                    label="{{$ctrl.label}}"
+                    show-error="ctrl.showError()">
+    </input-messages>
+</div>

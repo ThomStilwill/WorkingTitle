@@ -3,29 +3,42 @@
         <div class="col-xs-6 col-xs-offset-3">
 
             <div class="alert alert-danger" ng-show="showFormError()">Please fix errors.</div>
-            
-            <input-text name="username"
-                        label="User Name"
-                        placeholder="User Name"
-                        tooltip="User name or email"
-                        value="$ctrl.username"
-                        required="true"
-                        form="loginform">
+
+            <input-text name="username" label="User Name" placeholder="User Name" tooltip="User name or email" value="$ctrl.username"
+                required="true" form="loginform">
             </input-text>
-            
-            <input-text name="password"
-                        label="Password"
-                        value="$ctrl.password"
-                        required="true"
-                        min-length="6">
+
+            <input-text name="password" label="Password" value="$ctrl.password" required="true" min-length="6">
             </input-text>
-           
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <input-text name="address" label="Address" value="$ctrl.address" required="true">
+                    </input-text>
+                </div>
+
+                <div class="col-xs-6">
+                    <input-text name="city" label="City" value="$ctrl.city" required="true">
+                    </input-text>
+                </div>
+
+                <div class="col-xs-2">
+                    <input-select name="state" label="State" value="$ctrl.state" option="$ctrl.states" required="true">
+                    </input-select>
+                </div>
+
+                <div class="col-xs-4">
+                    <input-text name="zip" label="Zip" value="$ctrl.zip" pattern="" required="true">
+                    </input-text>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary">Login</button>
-            
+
             <hr/>
             <pre>{{$ctrl | json}}</pre>
             <pre>{{$ctrl.form | json}}</pre>
-    
+
         </div>
     </form>
 </div>
