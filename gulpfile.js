@@ -12,7 +12,7 @@ var distfolderweb = distfolder + 'web/'
 var distfolderserver = distfolder + 'server/'
 var deployTarget = '\\\\mars\\node_apps\\web'
 
-gulp.task('default', ['tools', 'server', 'app', 'content', 'less', 'libs', 'fonts'])
+gulp.task('default', ['tools', 'server', 'app', 'vue', 'content', 'less', 'libs', 'fonts'])
 
 gulp.task('watch', ['default'], function () {
   gulp.watch(['less/**/*.less', 'client/**/*.*'], ['default'])
@@ -22,7 +22,7 @@ gulp.task('content', function (cb) {
   var dest = distfolderweb
 
   pump([
-    gulp.src(['client/index.html']),
+    gulp.src(['client/*.html']),
     gulp.dest(dest)
   ], cb)
 })
@@ -37,7 +37,7 @@ gulp.task('fonts', function (cb) {
   ], cb)
 })
 
-gulp.task('cleancss', function (cb) {   
+gulp.task('cleancss', function (cb) {
   var dest = distfolderweb + 'css'
   return clean(dest, {force: true})
 })
@@ -76,6 +76,7 @@ gulp.task('libs', function (cb) {
       'node_modules/angular-messages/angular-messages.min.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+      'node_modules/vue/dist/vue.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',
       'node_modules/moment/moment.js',
@@ -104,7 +105,7 @@ gulp.task('app-templates', ['clean-app'], function (cb) {
   ], cb)
 })
 
-gulp.task('app', ['app-templates'], function (cb) {
+gulp.task('app', ['clean-app', 'app-templates'], function (cb) {
   var dest = distfolderweb + 'app'
 
   pump([
@@ -112,6 +113,16 @@ gulp.task('app', ['app-templates'], function (cb) {
     sourcemaps.init(),
     concat('app.js'),
     sourcemaps.write('../maps'),
+    gulp.dest(dest)
+  ], cb)
+})
+
+gulp.task('vue', ['clean-app'], function (cb) {
+  var dest = distfolderweb + 'app'
+
+  pump([
+    gulp.src(['client/vue/**/*.js', '!client/vue/**/*.spec.js']),
+    concat('vueapp.js'),
     gulp.dest(dest)
   ], cb)
 })
