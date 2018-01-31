@@ -4,22 +4,18 @@ const config = {
 }
 
 Vue.use(VeeValidate, config)
+Vue.use(VueTheMask)
 
 var valexpr = {
-  zip: '\\d{5}(-\\d{4})?'
+  zip: '^\\d{5}(?:[-]\\d{4})?$'
 }
-
 
 const messages = {
   en: {
     messages: {
       required: (name) => `${name} is needed.`
     }
-  }
-}
-VeeValidate.Validator.localize(messages)
-
-const fieldmessages = {
+  },
   custom: {
     zip: {
       regex: (name) => `${name} can be 5 or 9 digits.`,
@@ -28,7 +24,7 @@ const fieldmessages = {
   }
 }
 
-VeeValidate.Validator.localize('en', fieldmessages)
+VeeValidate.Validator.localize('en', messages)
 
 Vue.component('input-dropdown', {
   inject: ['$validator'],
@@ -94,23 +90,27 @@ var data = {
   meta: {
     username: { name: 'username',
       label: 'User Name',
+      mask: '',
       validate: 'required|sillyname'
     },
     street: { name: 'street',
       label: 'Street Address',
+      mask: '',
       validate: 'required'
     },
     city: { name: 'city',
       label: 'City',
-      validate: 'required'
+      mask: ''
     },
     state: { name: 'State',
       label: 'State',
+      mask: '',
       validate: 'required',
       options: getStates()
     },
     zip: { name: 'zip',
       label: 'Zip',
+      mask: '#####-####',
       validate: 'required|regex:' + valexpr.zip
     }
   }

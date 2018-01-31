@@ -53,8 +53,9 @@
                 </label>
                 <input type="text" 
                        class="form-control" 
-                       :name="meta.name" 
-                       v-validate="meta.validate"
+                       :name="meta.name"
+                       v-mask="meta.mask || ''"
+                       v-validate="meta.validate || ''"
                        :data-vv-as="meta.label"
                        v-bind:value="value" 
                        v-on:input="updateValue($event.target.value)">
