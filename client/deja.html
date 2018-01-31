@@ -8,10 +8,10 @@
     <link rel="stylesheet" type="text/css" href="css\app.css">
 
     <base href="/">
-    <title>Vuew Sandbox</title>
+    <title>Vue Sandbox</title>
 </head>
 
-<body ng-class="theme">
+<body class="theme">
     <header>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -30,29 +30,42 @@
     <div class="container body-content" id="content">
 
         <template id="dropdown-template">
-            <div class="form-group">
+            <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
                 <label :for="meta.name" class="form-label">
                     {{meta.label}}
                 </label>
-                <select type="text" class="form-control" :name="meta.name" v-bind:value="value" v-on:change="updateValue($event.target.value)">
+                <select type="text" 
+                        class="form-control" 
+                        :name="meta.name" 
+                        v-validate="meta.validate"
+                        v-bind:value="value" 
+                        v-on:change="updateValue($event.target.value)">
                     <option v-for="option in meta.options" :value="option.key">{{option.display}}</option>
                 </select>
+                <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
             </div>
         </template>
 
         <template id="text-template">
-            <div class="form-group">
+            <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
                 <label :for="meta.name" class="form-label">
                     {{meta.label}}
                 </label>
-                <input type="text" class="form-control" :name="meta.name" v-bind:value="value" v-on:input="updateValue($event.target.value)">
+                <input type="text" 
+                       class="form-control" 
+                       :name="meta.name" 
+                       v-validate="meta.validate"
+                       :data-vv-as="meta.label"
+                       v-bind:value="value" 
+                       v-on:input="updateValue($event.target.value)">
+                <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
             </div>
         </template>
 
         <div id="app1" class="container-fluid">
             <h3>{{title}}</h3>
-            <div class="col-md-6 col-md-offset-3">
-                <form novalidatate>
+            <div class="col-md-6">
+                <form novalidatate @submit.prevent='submit'>
                     <input-text v-model="model.username" v-bind:meta="meta.username"></input-text>
                     <input-text v-model="model.street" v-bind:meta="meta.street"></input-text>
                     <div class="row">

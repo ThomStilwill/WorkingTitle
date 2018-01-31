@@ -36,8 +36,28 @@ var util = (function () {
     return true
   }
 
+  function seek (predicate, obj) {
+    if (Object(obj) !== obj) {
+      return null
+    }
+
+    if (predicate(obj)) {
+      return obj
+    }
+
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        var result = seek(predicate, obj[i])
+        if (result) {
+          return result
+        }
+      }
+    }
+  }
+
   return {
     search: search,
-    where: where
+    where: where,
+    seek: seek
   }
 })()

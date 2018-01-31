@@ -77,10 +77,12 @@ gulp.task('libs', function (cb) {
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       'node_modules/vue/dist/vue.js',
+      'node_modules/vee-validate/dist/vee-validate.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',
       'node_modules/moment/moment.js',
-      'client/scripts/**/*.js'
+      'client/scripts/**/*.js',
+      '!client/scripts/**/*.spec.js'
     ]),
     concat('libs.js'),
     gulp.dest(dest)
