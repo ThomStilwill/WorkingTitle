@@ -40,7 +40,7 @@
                         v-validate="meta.validate"
                         v-bind:value="value" 
                         v-on:change="updateValue($event.target.value)">
-                    <option :value="null" disabled>State</option>
+                    <option :value="null" disabled>{{meta.placeholder}}</option>
                     <option v-for="option in meta.options" :value="option.key">{{option.display}}</option>
                 </select>
                 <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
@@ -54,6 +54,7 @@
                 </label>
                 <input type="text" 
                        class="form-control" 
+                       :placeholder="meta.placeholder"
                        :name="meta.name"
                        v-if="!meta.mask"
                        v-validate="meta.validate || ''"
@@ -63,6 +64,7 @@
                        
                 <input type="text" 
                        class="form-control" 
+                       :placeholder="meta.placeholder"
                        :name="meta.name"
                        v-if="meta.mask"
                        v-mask="meta.mask"

@@ -94,12 +94,13 @@ var data = {
     email: '',
     street: '',
     city: '',
-    state: '',
+    state: null,
     zip: ''
   },
   meta: {
     username: { name: 'username',
       label: 'User Name',
+      placeholder: 'enter your user name',
       validate: 'required|sillyname|max:10'
     },
     email: { name: 'email',
