@@ -40,6 +40,7 @@
                         v-validate="meta.validate"
                         v-bind:value="value" 
                         v-on:change="updateValue($event.target.value)">
+                    <option :value="null" disabled>State</option>
                     <option v-for="option in meta.options" :value="option.key">{{option.display}}</option>
                 </select>
                 <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
@@ -54,11 +55,22 @@
                 <input type="text" 
                        class="form-control" 
                        :name="meta.name"
-                       v-mask="meta.mask || ''"
+                       v-if="!meta.mask"
                        v-validate="meta.validate || ''"
                        :data-vv-as="meta.label"
                        v-bind:value="value" 
                        v-on:input="updateValue($event.target.value)">
+                       
+                <input type="text" 
+                       class="form-control" 
+                       :name="meta.name"
+                       v-if="meta.mask"
+                       v-mask="meta.mask"
+                       v-validate="meta.validate || ''"
+                       :data-vv-as="meta.label"
+                       v-bind:value="value" 
+                       v-on:input="updateValue($event.target.value)">                       
+
                 <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
             </div>
         </template>
@@ -68,6 +80,7 @@
             <div class="col-md-6">
                 <form novalidatate @submit.prevent='submit'>
                     <input-text v-model="model.username" v-bind:meta="meta.username"></input-text>
+                    <input-text v-model="model.email" v-bind:meta="meta.email"></input-text>
                     <input-text v-model="model.street" v-bind:meta="meta.street"></input-text>
                     <div class="row">
                         <div class="col-md-6">

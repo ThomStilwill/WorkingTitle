@@ -1,5 +1,5 @@
 const config = {
-  events: 'blur',
+  events: 'blur'
   // delay: 100
 }
 
@@ -13,9 +13,15 @@ var valexpr = {
 const messages = {
   en: {
     messages: {
-      required: (name) => `${name} is needed.`
+      required: (name) => `${name} is required.`,
+      max: (name, value) => `${name} can't be more that ${value} characters.`
     }
-  },
+  }
+}
+
+VeeValidate.Validator.localize(messages)
+
+const custommessages = {
   custom: {
     zip: {
       regex: (name) => `${name} can be 5 or 9 digits.`,
@@ -24,7 +30,7 @@ const messages = {
   }
 }
 
-VeeValidate.Validator.localize('en', messages)
+VeeValidate.Validator.localize('en', custommessages)
 
 Vue.component('input-dropdown', {
   inject: ['$validator'],
@@ -32,6 +38,9 @@ Vue.component('input-dropdown', {
   template: '#dropdown-template',
   methods: {
     updateValue: function (value) {
+      if (value === '') {
+        value = null
+      }
       this.$emit('input', value)
     }
   }
@@ -71,17 +80,18 @@ const nameRule = {
 
 VeeValidate.Validator.extend('sillyname', nameRule)
 
-function getStates () {
-  return [{key: 'CT', display: 'Connecticut'},
-    {key: 'NY', display: 'New York'},
-    {key: 'MA', display: 'Massechusets'},
-    {key: 'RI', display: 'Rhode Island'}]
-}
+// function getStates () {
+//   return [{key: 'CT', display: 'Connecticut'},
+//     {key: 'NY', display: 'New York'},
+//     {key: 'MA', display: 'Massechusets'},
+//     {key: 'RI', display: 'Rhode Island'}]
+// }
 
 var data = {
   title: 'Vue Sandbox',
   model: {
     username: 'bob',
+    email: '',
     street: '',
     city: '',
     state: '',
@@ -90,23 +100,23 @@ var data = {
   meta: {
     username: { name: 'username',
       label: 'User Name',
-      mask: '',
-      validate: 'required|sillyname'
+      validate: 'required|sillyname|max:10'
+    },
+    email: { name: 'email',
+      label: 'Email Address',
+      validate: 'required|email'
     },
     street: { name: 'street',
       label: 'Street Address',
-      mask: '',
       validate: 'required'
     },
     city: { name: 'city',
-      label: 'City',
-      mask: ''
+      label: 'City'
     },
     state: { name: 'State',
       label: 'State',
-      mask: '',
       validate: 'required',
-      options: getStates()
+      options: []
     },
     zip: { name: 'zip',
       label: 'Zip',
@@ -129,7 +139,19 @@ var vm = new Vue({
         }
       })
     }
+  },
+  created: function () {
+    axios.get('api/states')
+      .then(response => {
+        this.meta.state.options = response.data.map(state => {
+          return {key: state.abbr, display: state.name}
+        })
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
   }
+
 })
 
 // vm.$watch('model.username.value', function (newValue, oldValue) {

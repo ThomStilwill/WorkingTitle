@@ -77,6 +77,7 @@ gulp.task('libs', function (cb) {
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
       'node_modules/vue/dist/vue.js',
+      'node_modules/axios/dist/axios.js',
       'node_modules/vue-the-mask/dist/vue-the-mask.js',
       'node_modules/vee-validate/dist/vee-validate.js',
       'node_modules/jquery/dist/jquery.min.js',
