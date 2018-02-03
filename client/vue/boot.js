@@ -61,5 +61,6 @@ const router = new VueRouter({routes})
 // router.push({name: 'foo'})
 
 new Vue({
+  el: '#vueapp',
   router: router
-}).$mount('#vueapp')
+})

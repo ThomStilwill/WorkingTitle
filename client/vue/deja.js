@@ -1,4 +1,7 @@
 module.exports = function () {
+  
+  var template = require('./deja.html')
+  
   var valexpr = {
     zip: '^\\d{5}(?:[-]\\d{4})?$'
   }
@@ -85,8 +88,9 @@ module.exports = function () {
   }
 
   var Deja = {
-    template: '<h3>Deja</h3>', // require('./deja.html'),
-    data: function() {
+    // template: '<h3>Deja</h3>',
+    template: template,
+    data: function () {
       return data
     },
     methods: {
