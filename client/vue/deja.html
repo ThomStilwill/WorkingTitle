@@ -1,0 +1,53 @@
+
+<template id="dropdown-template">
+    <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
+        <label :for="meta.name" class="form-label">
+            {{meta.label}}
+        </label>
+        <select type="text" class="form-control" :name="meta.name" v-validate="meta.validate" v-bind:value="value" v-on:change="updateValue($event.target.value)">
+            <option :value="null" disabled>{{meta.placeholder}}</option>
+            <option v-for="option in meta.options" :value="option.key">{{option.display}}</option>
+        </select>
+        <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
+    </div>
+</template>
+
+<template id="text-template">
+    <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
+        <label :for="meta.name" class="form-label">
+            {{meta.label}}
+        </label>
+        <input type="text" class="form-control" :placeholder="meta.placeholder" :name="meta.name" v-if="!meta.mask" v-validate="meta.validate || ''"
+            :data-vv-as="meta.label" v-bind:value="value" v-on:input="updateValue($event.target.value)">
+
+        <input type="text" class="form-control" :placeholder="meta.placeholder" :name="meta.name" v-if="meta.mask" v-mask="meta.mask"
+            v-validate="meta.validate || ''" :data-vv-as="meta.label" v-bind:value="value" v-on:input="updateValue($event.target.value)">
+
+        <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
+    </div>
+</template>
+
+
+<h3>{{title}}</h3>
+<div class="row">
+    <div class="col-xs-8">
+        <form novalidatate @submit.prevent='submit'>
+            <input-text v-model="model.username" v-bind:meta="meta.username"></input-text>
+            <input-text v-model="model.email" v-bind:meta="meta.email"></input-text>
+            <input-text v-model="model.street" v-bind:meta="meta.street"></input-text>
+            <div class="row">
+                <div class="col-md-6">
+                    <input-text v-model="model.city" v-bind:meta="meta.city"></input-text>
+                </div>
+                <div class="col-md-4">
+                    <input-dropdown v-model="model.state" v-bind:meta="meta.state"></input-dropdown>
+                </div>
+                <div class="col-md-2">
+                    <input-text v-model="model.zip" v-bind:meta="meta.zip"></input-text>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+    <pre>{{model}} </pre>
+</div>

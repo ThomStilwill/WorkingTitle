@@ -39,6 +39,10 @@ angular.module('ratel')
     {
       name: 'login',
       component: 'login'
+    },
+    {
+      name: 'vue',
+      templateUrl: 'app/views/vue.html'
     }
     ]
 

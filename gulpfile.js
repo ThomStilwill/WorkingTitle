@@ -1,21 +1,62 @@
 var gulp = require('gulp')
 var pump = require('pump')
+var Server = require('karma').Server
+
 var concat = require('gulp-concat')
 var sourcemaps = require('gulp-sourcemaps')
-var Server = require('karma').Server
 var less = require('gulp-less')
-var clean = require('gulp-clean')
+var clean = require('gulp-rimraf')
 var notify = require('gulp-notify')
+
+var browserify = require('browserify')
+var stringify = require('stringify')
+var source = require('vinyl-source-stream')
 
 var distfolder = 'dist/'
 var distfolderweb = distfolder + 'web/'
 var distfolderserver = distfolder + 'server/'
 var deployTarget = '\\\\mars\\node_apps\\web'
 
-gulp.task('default', ['tools', 'server', 'app', 'vue', 'content', 'less', 'libs', 'fonts'])
+var spawn = require('child_process').spawn
+
+// gulp.task('auto', function () {
+//   // Store current process if any
+//   var p
+
+//   gulp.watch('gulpfile.js', spawnChildren)
+//   // Comment the line below if you start your server by yourslef anywhere else
+//   spawnChildren()
+
+//   function spawnChildren (e) {
+//     if (p) {
+//       p.kill()
+//     }
+
+//     p = spawn('gulp', ['watch'], {stdio: 'inherit'})
+//   }
+// })
+
+gulp.task('default', ['tools', 'content', 'server', 'app', 'vue', 'less', 'vuelibs', 'nglibs', 'fonts'])
 
 gulp.task('watch', ['default'], function () {
   gulp.watch(['less/**/*.less', 'client/**/*.*'], ['default'])
+})
+
+gulp.task('cleandist', function (cb) {
+  var dest = distfolder
+  pump([
+    gulp.src(dest + '/*', {read: false}),
+    clean()
+  ], cb)
+})
+
+gulp.task('tools', function (cb) {
+  var dest = distfolder
+
+  pump([
+    gulp.src(['package.json', 'restart.cmd']),
+    gulp.dest(dest)
+  ], cb)
 })
 
 gulp.task('content', function (cb) {
@@ -39,7 +80,7 @@ gulp.task('fonts', function (cb) {
 
 gulp.task('cleancss', function (cb) {
   var dest = distfolderweb + 'css'
-  return clean(dest, {force: true})
+  return clean(dest, {force: true, read: false})
 })
 
 gulp.task('less', function (cb) {
@@ -63,12 +104,32 @@ gulp.task('cleanlibs', function (cb) {
   var dest = distfolderweb + 'scripts'
 
   pump([
-    clean(dest, null, {force: true}),
+    clean(dest, null, {force: true, read: false}),
     gulp.dest(dest)
   ], cb)
 })
 
-gulp.task('libs', function (cb) {
+gulp.task('vuelibs', function (cb) {
+  var dest = distfolderweb + 'scripts'
+
+  pump([
+    gulp.src([
+      'node_modules/vue/dist/vue.js',
+      'node_modules/vue-router/dist/vue-router.js',
+      'node_modules/vue-the-mask/dist/vue-the-mask.js',
+      'node_modules/vee-validate/dist/vee-validate.js',
+      'node_modules/axios/dist/axios.js',
+      'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/bootstrap/dist/js/bootstrap.min.js',
+      'client/scripts/**/*.js',
+      '!client/**/*.spec.js'
+    ]),
+    concat('vuelibs.js'),
+    gulp.dest(dest)
+  ], cb)
+})
+
+gulp.task('nglibs', function (cb) {
   var dest = distfolderweb + 'scripts'
 
   pump([
@@ -76,17 +137,13 @@ gulp.task('libs', function (cb) {
       'node_modules/angular-messages/angular-messages.min.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
-      'node_modules/vue/dist/vue.js',
-      'node_modules/axios/dist/axios.js',
-      'node_modules/vue-the-mask/dist/vue-the-mask.js',
-      'node_modules/vee-validate/dist/vee-validate.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',
       'node_modules/moment/moment.js',
       'client/scripts/**/*.js',
-      '!client/scripts/**/*.spec.js'
+      '!client/**/*.spec.js'
     ]),
-    concat('libs.js'),
+    concat('nglibs.js'),
     gulp.dest(dest)
   ], cb)
 })
@@ -121,12 +178,15 @@ gulp.task('app', ['clean-app', 'app-templates'], function (cb) {
   ], cb)
 })
 
-gulp.task('vue', ['clean-app'], function (cb) {
+gulp.task('vue', function (cb) {
   var dest = distfolderweb + 'app'
-
   pump([
-    gulp.src(['client/vue/**/*.js', '!client/vue/**/*.spec.js']),
-    concat('vueapp.js'),
+    browserify('./client/vue/boot.js', {extensions: '.html'})
+      .transform(stringify, {
+        appliesTo: { includeExtensions: ['.html'] },
+        minify: true
+      }).bundle(),
+    source('vueapp.js'),
     gulp.dest(dest)
   ], cb)
 })
@@ -136,15 +196,6 @@ gulp.task('server', function (cb) {
 
   pump([
     gulp.src(['server/**/*.*']),
-    gulp.dest(dest)
-  ], cb)
-})
-
-gulp.task('tools', function (cb) {
-  var dest = distfolder
-
-  pump([
-    gulp.src(['package.json', 'restart.cmd']),
     gulp.dest(dest)
   ], cb)
 })
