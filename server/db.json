@@ -1,5 +1,11 @@
 {
-    "links":[
+  "log": [
+    {"id": 0, "date":"10/1/2017", "event": "Fuel follower engine rebuild", "note": ""},
+    {"id": 1, "date":"10/1/2017", "event": "Timing belt replacement", "note": ""},
+    {"id": 2, "date":"10/1/2016", "event": "Clutch replacement", "note": ""}
+  ],  
+  
+  "links":[
       {"title": "Weather","href":"http://www.intellicast.com/Local/Weather.aspx?location=USCT0169"},
       {"title": "Power Outages","href":"https://www.eversource.com/clp/outage/outagemap.aspx"},
       {"title": "Plainville Town","href":"http://www.plainvillect.com"},

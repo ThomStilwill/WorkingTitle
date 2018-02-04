@@ -28,39 +28,65 @@
         </nav>
     </header>
     <div class="container body-content" id="content">
-        
-            <template id="dropdown-template">
-                    <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
-                        <label :for="meta.name" class="form-label">
-                            {{meta.label}}
-                        </label>
-                        <select type="text" class="form-control" :name="meta.name" v-validate="meta.validate" v-bind:value="value" v-on:change="updateValue($event.target.value)">
-                            <option :value="null" disabled>{{meta.placeholder}}</option>
-                            <option v-for="option in meta.options" :value="option.key">{{option.display}}</option>
-                        </select>
-                        <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
-                    </div>
-                </template>
-            
-                <template id="text-template">
-                    <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
-                        <label :for="meta.name" class="form-label">
-                            {{meta.label}}
-                        </label>
-                        <input type="text" class="form-control" :placeholder="meta.placeholder" :name="meta.name" v-if="!meta.mask" v-validate="meta.validate || ''"
-                            :data-vv-as="meta.label" v-bind:value="value" v-on:input="updateValue($event.target.value)">
-            
-                        <input type="text" class="form-control" :placeholder="meta.placeholder" :name="meta.name" v-if="meta.mask" v-mask="meta.mask"
-                            v-validate="meta.validate || ''" :data-vv-as="meta.label" v-bind:value="value" v-on:input="updateValue($event.target.value)">
-            
-                        <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
-                    </div>
-                </template>
+
+        <template id="grid-template">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th v-for="key in columns"
+                    @click="sortBy(key)"
+                    :class="{ active: sortKey == key }">
+                    {{ key | capitalize }}
+                    <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="entry in filteredData">
+                  <td @click="edit(entry)">edit</td>  
+                  <td @click="remove(entry)">delete</td>  
+                  <td v-for="key in columns">
+                    {{entry[key]}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </template>
+
+        <template id="dropdown-template">
+            <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
+                <label :for="meta.name" class="form-label">
+                    {{meta.label}}
+                </label>
+                <select type="text" class="form-control" :name="meta.name" v-validate="meta.validate" v-bind:value="value" v-on:change="updateValue($event.target.value)">
+                    <option :value="null" disabled>{{meta.placeholder}}</option>
+                    <option v-for="option in meta.options" :value="option.key">{{option.display}}</option>
+                </select>
+                <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
+            </div>
+        </template>
+    
+        <template id="text-template">
+            <div class="form-group" :class="{'has-error': errors.has(meta.name)}">
+                <label :for="meta.name" class="form-label">
+                    {{meta.label}}
+                </label>
+                <input type="text" class="form-control" :placeholder="meta.placeholder" :name="meta.name" v-if="!meta.mask" v-validate="meta.validate || ''"
+                    :data-vv-as="meta.label" v-bind:value="value" v-on:input="updateValue($event.target.value)">
+    
+                <input type="text" class="form-control" :placeholder="meta.placeholder" :name="meta.name" v-if="meta.mask" v-mask="meta.mask"
+                    v-validate="meta.validate || ''" :data-vv-as="meta.label" v-bind:value="value" v-on:input="updateValue($event.target.value)">
+    
+                <p v-show="errors.has(meta.name)" class="text-danger">{{ errors.first(meta.name) }}</p>
+            </div>
+        </template>
 
         <hr/>
         <div id="vueapp" class="container-fluid">
             <router-link to="/deja">Deja</router-link>
             <router-link to="/foo">Foo</router-link>
+            <router-link to="/log">Log</router-link>
             <router-view></router-view>
         </div>
         

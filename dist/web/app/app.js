@@ -265,6 +265,93 @@ angular.module('ratel')
   })
 
 angular.module('ratel')
+  .service('LinkService', ['$q', '$http', '$log', function ($q, $http) {
+    function fetch () {
+      var url = `api/links`
+
+      return $http.get(url)
+        .then(function (result) {
+          return result.data
+        })
+    }
+
+    function tags () {
+      var url = `api/tags`
+
+      return $http.get(url)
+        .then(function (result) {
+          return result.data
+        })
+    }
+
+    return {
+      fetch: fetch,
+      tags: tags
+    }
+  }])
+
+angular.module('ratel')
+  .service('MenuService', ['$http', '$log', function ($http, $log) {
+    function fetch () {
+      var url = `api/menus`
+      return $http.get(url)
+        .then(function (result) {
+          return result.data.length > 0 ? result.data : null
+        })
+    }
+
+    return {
+      fetch: fetch
+    }
+  }])
+
+angular.module('ratel')
+  .service('PersonService', ['$q', '$http', '$log', function ($q, $http, $log) {
+    function fetch (queries) {
+      var url = `api/persons`
+
+      var fragments = []
+      if (queries) {
+        queries.forEach(query => {
+          var field, operator, value
+          if (query.operator === 'q=' && query.value) {
+            field = '',
+            operator = query.operator,
+            value = query.value
+          } else if ((query.field && query.operator && query.value)) {
+            field = query.field,
+            operator = query.operator,
+            value = query.value
+          }
+          var fragment = `${field}${operator}${value}`
+          fragments.push(fragment)
+        })
+
+        url += '?' + fragments.join('&')
+      }
+
+      $log.log(url)
+      return $http.get(url)
+        .then(function (result) {
+          return result.data
+        })
+    }
+
+    function get (id) {
+      var url = `api/persons?id=${id}`
+      return $http.get(url)
+        .then(function (result) {
+          return result.data.length > 0 ? result.data[0] : null
+        })
+    }
+
+    return {
+      fetch: fetch,
+      get: get
+    }
+  }])
+
+angular.module('ratel')
   .component('about', {
     templateUrl: 'app/views/about.html',
     controller: function ($scope) {
@@ -680,92 +767,5 @@ angular.module('ratel')
       }
     }
   })
-
-angular.module('ratel')
-  .service('LinkService', ['$q', '$http', '$log', function ($q, $http) {
-    function fetch () {
-      var url = `api/links`
-
-      return $http.get(url)
-        .then(function (result) {
-          return result.data
-        })
-    }
-
-    function tags () {
-      var url = `api/tags`
-
-      return $http.get(url)
-        .then(function (result) {
-          return result.data
-        })
-    }
-
-    return {
-      fetch: fetch,
-      tags: tags
-    }
-  }])
-
-angular.module('ratel')
-  .service('MenuService', ['$http', '$log', function ($http, $log) {
-    function fetch () {
-      var url = `api/menus`
-      return $http.get(url)
-        .then(function (result) {
-          return result.data.length > 0 ? result.data : null
-        })
-    }
-
-    return {
-      fetch: fetch
-    }
-  }])
-
-angular.module('ratel')
-  .service('PersonService', ['$q', '$http', '$log', function ($q, $http, $log) {
-    function fetch (queries) {
-      var url = `api/persons`
-
-      var fragments = []
-      if (queries) {
-        queries.forEach(query => {
-          var field, operator, value
-          if (query.operator === 'q=' && query.value) {
-            field = '',
-            operator = query.operator,
-            value = query.value
-          } else if ((query.field && query.operator && query.value)) {
-            field = query.field,
-            operator = query.operator,
-            value = query.value
-          }
-          var fragment = `${field}${operator}${value}`
-          fragments.push(fragment)
-        })
-
-        url += '?' + fragments.join('&')
-      }
-
-      $log.log(url)
-      return $http.get(url)
-        .then(function (result) {
-          return result.data
-        })
-    }
-
-    function get (id) {
-      var url = `api/persons?id=${id}`
-      return $http.get(url)
-        .then(function (result) {
-          return result.data.length > 0 ? result.data[0] : null
-        })
-    }
-
-    return {
-      fetch: fetch,
-      get: get
-    }
-  }])
 
 //# sourceMappingURL=../maps/app.js.map

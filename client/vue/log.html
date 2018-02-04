@@ -1,0 +1,35 @@
+<div>
+
+    <div class="row">
+        <div class="col-xs-8">
+            <h4>{{title}}</h4>
+            <form novalidatate @submit.prevent='submit'>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input-text v-model="model.date" v-bind:meta="meta.date"></input-text>
+                    </div>
+                    <div class="col-md-6">
+                        <input-text v-model="model.miles" v-bind:meta="meta.miles"></input-text>
+                    </div>
+                </div>
+                <input-text v-model="model.note" v-bind:meta="meta.note"></input-text>
+                <input-text v-model="model.event" v-bind:meta="meta.event"></input-text>
+                <input type="hidden" v-model="model.id"></input>
+    
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+        <pre>{{model}} </pre>
+    </div>
+
+    Search <input name="query" v-model="searchQuery">
+
+    <grid
+        :data="gridData"
+        :columns="gridColumns"
+        :filter-key="searchQuery"
+        :edit-method="edit"
+        :remove-method="remove">
+    </grid>
+  
+</div>
