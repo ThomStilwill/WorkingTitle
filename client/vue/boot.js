@@ -1,5 +1,5 @@
-var Deja = require('./deja.js')
-var Log = require('./log.js')
+import Deja from './deja.js'
+import Log from './log.js'
 
 const config = {
   events: 'blur'
@@ -35,7 +35,8 @@ Vue.component('grid', {
     })
     return {
       sortKey: '',
-      sortOrders: sortOrders
+      sortOrders: sortOrders,
+      selected: ''
     }
   },
   computed: {
@@ -76,6 +77,9 @@ Vue.component('grid', {
     },
     remove: function (item) {
       this.removeMethod(item)
+    },
+    select: function (id) {
+      this.selected = id
     }
   }
 })

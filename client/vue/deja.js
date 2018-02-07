@@ -1,7 +1,6 @@
-module.exports = function () {
-  
+export default function () {
   var template = require('./deja.html')
-  
+ 
   var valexpr = {
     zip: '^\\d{5}(?:[-]\\d{4})?$'
   }
@@ -44,7 +43,7 @@ module.exports = function () {
   var data = {
     title: 'Vue Sandbox',
     model: {
-      username: 'bob',
+     username: 'bob',
       email: '',
       street: '',
       city: '',

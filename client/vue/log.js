@@ -1,4 +1,6 @@
-module.exports = function () {
+import service from './logService.js'
+
+export default function () {
   var template = require('./log.html')
 
   var Log = {
@@ -9,6 +11,8 @@ module.exports = function () {
         searchQuery: '',
         gridColumns: ['id', 'date', 'miles', 'event', 'note'],
         gridData: [],
+        active: false,
+        adding: false,
         model: {
           id: '',
           date: '',
@@ -41,37 +45,60 @@ module.exports = function () {
     },
     methods: {
       edit: function (item) {
-        this.id = item.id
-        this.date = item.date
-        this.miles = item.miles
-        this.note = item.note
-        this.event = item.event
+        this.model.id = item.id
+        this.model.date = item.date
+        this.model.miles = item.miles
+        this.model.note = item.note
+        this.model.event = item.event
+      },
+      add: function () {
 
-        console.log('edit: ', item)
       },
       remove: function (item) {
-        console.log('delete: ', item)
+
+      },
+      clear: function () {
+        this.model.id = ''
+        this.model.date = ''
+        this.model.miles = ''
+        this.model.note = ''
+        this.model.event = ''
+      },
+      cancel: function () {
+        this.adding = false
+        this.active = false
+        this.clear()
+      },
+      loadgrid: function () {
+        service.getAll()
+          .then(response => {
+            this.gridData = response.data.map(logitem => {
+              return logitem
+            })
+          })
+          .catch(e => {
+            console.log(e)
+          })
       },
       submit: function () {
+        var vm = this
         this.$validator.validateAll().then((result) => {
           if (result) {
-            console.log('Submitted!')
+            service.save(this.model)
+              .then(function () {
+                vm.loadgrid()
+                vm.active = false
+                vm.adding = false
+                vm.clear()
+              })
           } else {
-            console.log('Invalid!')
+
           }
         })
       }
     },
     created: function () {
-      axios.get('api/log')
-        .then(response => {
-          this.gridData = response.data.map(logitem => {
-            return logitem
-          })
-        })
-        .catch(e => {
-          console.log(e)
-        })
+      this.loadgrid()
     }
 
   }

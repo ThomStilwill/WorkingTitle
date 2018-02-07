@@ -181,11 +181,13 @@ gulp.task('app', ['clean-app', 'app-templates'], function (cb) {
 gulp.task('vue', function (cb) {
   var dest = distfolderweb + 'app'
   pump([
-    browserify('./client/vue/boot.js', {extensions: '.html'})
+    browserify('./client/vue/boot.js', {extensions: '.html', debug: true})
       .transform(stringify, {
         appliesTo: { includeExtensions: ['.html'] },
         minify: true
-      }).bundle(),
+      })
+      .transform('babelify', {presets: ['env']})
+      .bundle(),
     source('vueapp.js'),
     gulp.dest(dest)
   ], cb)

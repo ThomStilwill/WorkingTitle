@@ -33,6 +33,9 @@
             <table class="table">
               <thead>
                 <tr>
+                    <th></th>
+                    <th></th>
+                    
                   <th v-for="key in columns"
                     @click="sortBy(key)"
                     :class="{ active: sortKey == key }">
@@ -43,9 +46,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="entry in filteredData">
-                  <td @click="edit(entry)">edit</td>  
-                  <td @click="remove(entry)">delete</td>  
+                <tr v-for="entry in filteredData" @click="select(entry.id)" :class="{'selected-row': selected === entry.id}">
+                  <td @click="edit(entry)"><i class="icon-edit" alt=edit></i></td>  
+                  <td @click="remove(entry)"><i class="icon-remove" alt=delete></td>  
                   <td v-for="key in columns">
                     {{entry[key]}}
                   </td>
