@@ -6,7 +6,7 @@ var concat = require('gulp-concat')
 var sourcemaps = require('gulp-sourcemaps')
 var less = require('gulp-less')
 var clean = require('gulp-rimraf')
-var notify = require('gulp-notify')
+// var notify = require('gulp-notify')
 
 var browserify = require('browserify')
 var stringify = require('stringify')
@@ -17,30 +17,6 @@ var distfolderweb = distfolder + 'web/'
 var distfolderserver = distfolder + 'server/'
 var deployTarget = '\\\\mars\\node_apps\\web'
 
-var spawn = require('child_process').spawn
-
-// gulp.task('auto', function () {
-//   // Store current process if any
-//   var p
-
-//   gulp.watch('gulpfile.js', spawnChildren)
-//   // Comment the line below if you start your server by yourslef anywhere else
-//   spawnChildren()
-
-//   function spawnChildren (e) {
-//     if (p) {
-//       p.kill()
-//     }
-
-//     p = spawn('gulp', ['watch'], {stdio: 'inherit'})
-//   }
-// })
-
-gulp.task('default', ['tools', 'content', 'server', 'app', 'vue', 'less', 'vuelibs', 'nglibs', 'fonts'])
-
-gulp.task('watch', ['default'], function () {
-  gulp.watch(['less/**/*.less', 'client/**/*.*'], ['default'])
-})
 
 gulp.task('cleandist', function (cb) {
   var dest = distfolder
@@ -157,16 +133,16 @@ gulp.task('clean-app', function (cb) {
   ], cb)
 })
 
-gulp.task('app-templates', ['clean-app'], function (cb) {
+gulp.task('app-templates', gulp.series('clean-app', function (cb) {
   var dest = distfolderweb + 'app'
 
   pump([
     gulp.src(['client/app/**/*.html']),
     gulp.dest(dest)
   ], cb)
-})
+}))
 
-gulp.task('app', ['clean-app', 'app-templates'], function (cb) {
+gulp.task('app', gulp.series('clean-app', 'app-templates', function (cb) {
   var dest = distfolderweb + 'app'
 
   pump([
@@ -176,7 +152,7 @@ gulp.task('app', ['clean-app', 'app-templates'], function (cb) {
     sourcemaps.write('../maps'),
     gulp.dest(dest)
   ], cb)
-})
+}))
 
 gulp.task('vue', function (cb) {
   var dest = distfolderweb + 'app'
@@ -202,10 +178,10 @@ gulp.task('server', function (cb) {
   ], cb)
 })
 
-gulp.task('tdd', function (done) {
+gulp.task('tdd', function (cb) {
   new Server({
     configFile: __dirname + '/karma.conf.js'
-  }, done).start()
+  }, cb).start()
 })
 
 gulp.task('cleandeploy', function (cb) {
@@ -222,3 +198,23 @@ gulp.task('deploy', function (cb) {
     gulp.dest(deployTarget)
   ], cb)
 })
+
+gulp.task('default', gulp.series('tools', 'content', 'server', 'app', 'vue', 'less', 'vuelibs', 'nglibs', 'fonts'))
+
+gulp.task('watch-content', function () {
+  gulp.watch(['client/*.html'], gulp.task('content'))
+})
+
+gulp.task('watch-less', function () {
+  gulp.watch(['client/less/**/*.less'], gulp.task('less'))
+})
+
+gulp.task('watch-app', function () {
+  gulp.watch(['client/app/**/*.*'], gulp.task('app'))
+})
+
+gulp.task('watch-vue', function () {
+  gulp.watch(['client/vue/**/*.*'], gulp.task('vue'))
+})
+
+gulp.task('watch', gulp.parallel('watch-less', 'watch-app', 'watch-vue', 'watch-content'))
