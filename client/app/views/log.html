@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <form name="logform" novalidate ng-submit="$ctrl.submit(logform)">
+        <div class="col-xs-8 col-xs-offset-1">
+
+            <div class="banner">
+                <div class="alert-danger" ng-show="showFormError()">Please fix errors.</div>
+            </div>
+
+            <div class="form-title">{{$ctrl.title}}</div>
+
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <input-text name="date" label="Date" placeholder="Event Date" tooltip="Enter the date the the event occured" value="$ctrl.date"
+                        required="true" form="logform">
+                    </input-text>
+                </div>
+                <div class="col-xs-6">
+                    <input-text name="miles" label="Miles" value="$ctrl.miles" required="true">
+                    </input-text>
+                </div>
+            </div>
+
+            <input-text name="event" label="Event" value="$ctrl.event" required="true">
+            </input-text>
+
+            <input-text name="note" label="Note" value="$ctrl.note" required="true">
+            </input-text>
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </div>
+            </div>
+            <!-- <hr/> <pre>{{$ctrl | json}}</pre> -->
+        </div>
+    </form>
+
+    <hr/>
+    <br/>
+    <div class="row">
+        <div class="col-xs-12">
+            <div ui-grid="{ data: $ctrl.logs }" ></div>
+        </div>
+    </div>
+    
+</div>

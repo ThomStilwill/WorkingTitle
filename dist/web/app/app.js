@@ -1,4 +1,4 @@
-angular.module('ratel', ['ui.router', 'ngMessages', 'ui.bootstrap'])
+angular.module('ratel', ['ui.router', 'ngMessages', 'ui.bootstrap', 'ui.grid'])
   .controller('basecontroller', ['$scope', function ($scope) {
     $scope.title = 'Stilwill.net'
     $scope.version = '0.0.1'
@@ -53,6 +53,10 @@ angular.module('ratel')
       component: 'login'
     },
     {
+      name: 'log',
+      component: 'log'
+    },
+    {
       name: 'vue',
       templateUrl: 'app/views/vue.html'
     }
@@ -80,7 +84,7 @@ angular.module('ratel')
       console.log('Transition erred!')
     })
 
-    $state.go('login')
+    $state.go('log')
   }])
 
 angular.module('ratel')
@@ -287,6 +291,34 @@ angular.module('ratel')
     return {
       fetch: fetch,
       tags: tags
+    }
+  }])
+
+angular.module('ratel')
+  .service('LogService', ['$q', '$http', '$log', function ($q, $http) {
+    function getAll () {
+      var url = 'api/log'
+      return $http.get(url)
+        .then(function (response) {
+          return response.data
+        })
+    }
+
+    function save (model) {
+      var url
+
+      if (model.id === '') {
+        url = 'api/log'
+        return $http.post(url, model)
+      } else {
+        url = 'api/log/' + model.id
+        return $http.put(url, model)
+      }
+    }
+
+    return {
+      getAll: getAll,
+      save: save
     }
   }])
 
@@ -564,6 +596,31 @@ angular.module('ratel')
         tickDiv = $('#tick')
         bindEvents()
         resize()
+      }
+    }
+  })
+
+angular.module('ratel')
+  .component('log', {
+    templateUrl: 'app/views/log.html',
+    controller: function ($scope, $filter, LogService) {
+      const ctrl = this
+
+      ctrl.$onInit = function () {
+        ctrl.title = 'Log'
+
+        LogService.getAll()
+          .then(function (data) {
+            ctrl.logs = data
+          })
+      }
+
+      ctrl.submit = function (form) {
+        if (form.$invalid) {
+          console.log('invalid: ', form.$error)
+          return
+        }
+        console.log($filter('json')(ctrl))
       }
     }
   })

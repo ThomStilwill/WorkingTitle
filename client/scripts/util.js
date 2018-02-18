@@ -1,4 +1,3 @@
-// TODO convert to factory
 var util = (function () {
   function traverse (testFn, min, max, lower, upper) {
     var median = Math.floor((max - min + 1) / 2) + min
@@ -55,9 +54,27 @@ var util = (function () {
     }
   }
 
+  function find (predicate, list) {
+    var i = 0
+    while (i < list.length) {
+      var result = predicate(list[i])
+      if (result) {
+        return list[i]
+      }
+      i++
+    }
+    return null
+  }
+
   return {
     search: search,
     where: where,
-    seek: seek
+    seek: seek,
+    find: find,
+    test: function () {
+      console.log('test')
+    }
   }
 })()
+
+module.exports = util

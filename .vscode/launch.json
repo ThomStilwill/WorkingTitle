@@ -21,6 +21,18 @@
         //"internalConsoleOptions": "neverOpen",
         "cwd": "${workspaceFolder}\\dist\\server",
         "program": "${workspaceFolder}\\dist\\server\\server.js"
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "TDD",
+        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "args": [
+            "${workspaceFolder}/client/scripts/**/util*.js",
+            "--watch", 
+            "--color"
+        ],
+        "internalConsoleOptions": "openOnSessionStart"
     }
     ]
 }

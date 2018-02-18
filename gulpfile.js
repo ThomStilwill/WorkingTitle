@@ -17,7 +17,6 @@ var distfolderweb = distfolder + 'web/'
 var distfolderserver = distfolder + 'server/'
 var deployTarget = '\\\\mars\\node_apps\\web'
 
-
 gulp.task('cleandist', function (cb) {
   var dest = distfolder
   pump([
@@ -44,12 +43,25 @@ gulp.task('content', function (cb) {
   ], cb)
 })
 
+gulp.task('css', function (cb) {
+  var dest = distfolderweb + 'css'
+
+  pump([
+    gulp.src([
+      'node_modules/angular-ui-grid/ui-grid.woff',
+      'node_modules/angular-ui-grid/ui-grid.ttf'
+    ]),
+    gulp.dest(dest)
+  ], cb)
+})
+
 gulp.task('fonts', function (cb) {
   var dest = distfolderweb + 'fonts'
 
   pump([
     gulp.src(['node_modules/bootstrap/dist/fonts/*.*',
-      'node_modules/font-awesome/fonts/*.*']),
+      'node_modules/font-awesome/fonts/*.*'
+    ]),
     gulp.dest(dest)
   ], cb)
 })
@@ -65,6 +77,7 @@ gulp.task('less', function (cb) {
   pump([
     gulp.src([ 'node_modules/bootstrap/less/bootstrap.less',
       'node_modules/font-awesome/less/font-awesome.less',
+      'node_modules/angular-ui-grid/ui-grid.css',
       // 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
       'client/less/*.less'
     ]),
@@ -113,6 +126,7 @@ gulp.task('nglibs', function (cb) {
       'node_modules/angular-messages/angular-messages.min.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+      'node_modules/angular-ui-grid/ui-grid.js',
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/bootstrap/dist/js/bootstrap.min.js',
       'node_modules/moment/moment.js',
@@ -180,7 +194,7 @@ gulp.task('server', function (cb) {
 
 gulp.task('tdd', function (cb) {
   new Server({
-    configFile: __dirname + '/karma.conf.js'
+    configFile: path.join(__dirname, '/karma.conf.js')
   }, cb).start()
 })
 
@@ -199,7 +213,7 @@ gulp.task('deploy', function (cb) {
   ], cb)
 })
 
-gulp.task('default', gulp.series('tools', 'content', 'server', 'app', 'vue', 'less', 'vuelibs', 'nglibs', 'fonts'))
+gulp.task('default', gulp.series('tools', 'content', 'server', 'app', 'vue', 'less', 'css', 'vuelibs', 'nglibs', 'fonts'))
 
 gulp.task('watch-content', function () {
   gulp.watch(['client/*.html'], gulp.task('content'))

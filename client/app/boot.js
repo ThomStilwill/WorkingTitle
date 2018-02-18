@@ -1,4 +1,4 @@
-angular.module('ratel', ['ui.router', 'ngMessages', 'ui.bootstrap'])
+angular.module('ratel', ['ui.router', 'ngMessages', 'ui.bootstrap', 'ui.grid'])
   .controller('basecontroller', ['$scope', function ($scope) {
     $scope.title = 'Stilwill.net'
     $scope.version = '0.0.1'

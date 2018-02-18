@@ -38,7 +38,9 @@
       {"title": "Tools", "menus": [
         {"title": "About", "view": "about"},
         {"title": "Clock", "view": "clock"},
-        {"title": "Tags", "view": "tags"}
+        {"title": "Tags", "view": "tags"},
+        {"title": "Log", "view": "log"}
+
       ]}
     ],
     

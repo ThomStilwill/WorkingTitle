@@ -41,6 +41,10 @@ angular.module('ratel')
       component: 'login'
     },
     {
+      name: 'log',
+      component: 'log'
+    },
+    {
       name: 'vue',
       templateUrl: 'app/views/vue.html'
     }
@@ -68,5 +72,5 @@ angular.module('ratel')
       console.log('Transition erred!')
     })
 
-    $state.go('login')
+    $state.go('log')
   }])
