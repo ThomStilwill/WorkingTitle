@@ -169,7 +169,7 @@ angular.module('ratel')
       columns: '=',
       value: '=',
       sortkey: '=',
-      selected: '='
+      editmethod: '&'
     },
     controller: function ($window, LogService) {
       const ctrl = this
@@ -204,20 +204,20 @@ angular.module('ratel')
       }
 
       ctrl.sortBy = function (key) {
-        this.sortKey = key
-        this.sortOrders[key] = this.sortOrders[key] * -1
+        ctrl.sortKey = key
+        ctrl.sortOrders[key] = this.sortOrders[key] * -1
       }
 
       ctrl.edit = function (item) {
-        this.editMethod(item)
+        ctrl.editmethod({item: item})
       }
 
       ctrl.remove = function (item) {
-        this.removeMethod(item)
+        ctrl.removeMethod(item)
       }
 
       ctrl.select = function (id) {
-        this.selected = id
+        ctrl.selected = id
       }
     }
   })
@@ -225,7 +225,7 @@ angular.module('ratel')
 angular.module('ratel')
   .component('inputText', {
     templateUrl: 'app/components/input-text.html',
-    require: {parentform: '^form'},
+    require: {parentform: '^form', model: 'ngModel'},
     bindings: {
       name: '@',
       label: '@',
@@ -234,16 +234,15 @@ angular.module('ratel')
       required: '@',
       minLength: '@',
       pattern: '@',
-      value: '=',
       onChange: '&',
       submitted: '<',
       form: '<'
     },
-    controller: function ($window) {
+    controller: function ($scope, $window) {
       const ctrl = this
 
       ctrl.change = function () {
-        ctrl.value = ctrl.internalValue
+        ctrl.model.$setViewValue(ctrl.internalValue)
         ctrl.onChange({
           name: ctrl.name,
           value: ctrl.internalValue
@@ -257,11 +256,17 @@ angular.module('ratel')
       ctrl.$onInit = function () {
         ctrl.elementId = $window.angular.copy(ctrl.name)
         ctrl.form = ctrl.parentform
+
+        ctrl.model.$render = () => {
+          ctrl.internalValue = ctrl.model.$modelValue
+          ctrl.model.$setViewValue(ctrl.internalValue)
+        }
       }
 
       ctrl.$onChanges = function (changes) {
-        if (changes.value) {
-          ctrl.internalValue = $window.angular.copy(ctrl.value)
+        if (changes.model) {
+          console.log(changes)
+          ctrl.internalValue = $window.angular.copy(ctrl.model)
         }
       }
     }
@@ -670,14 +675,45 @@ angular.module('ratel')
     controller: function ($scope, $filter, LogService) {
       const ctrl = this
 
+      ctrl.model = {}
+      ctrl.editing = false
+
       ctrl.$onInit = function () {
         ctrl.title = 'Log'
         ctrl.columns = ['id', 'date', 'miles', 'event', 'note']
 
+        ctrl.event = 'something'
+        load()
+      }
+
+      function load () {
         LogService.getAll()
           .then(function (data) {
             ctrl.logs = data
           })
+      }
+
+      function clear () {
+        ctrl.model.id = ''
+        ctrl.model.date = ''
+        ctrl.model.miles = ''
+        ctrl.model.event = ''
+        ctrl.model.note = ''
+        ctrl.editing = false
+      }
+
+      ctrl.add = function () {
+        clear()
+        // ctrl.editing = true
+      }
+
+      ctrl.edit = function (item) {
+        ctrl.model.id = item.id
+        ctrl.model.date = item.date
+        ctrl.model.miles = item.miles
+        ctrl.model.event = item.event
+        ctrl.model.note = ctrl.note
+        ctrl.editing = true
       }
 
       ctrl.submit = function (form) {
@@ -686,6 +722,11 @@ angular.module('ratel')
           return
         }
         console.log($filter('json')(ctrl))
+
+        LogService.save(ctrl.model)
+          .then(function () {
+            clear()
+          })
       }
     }
   })

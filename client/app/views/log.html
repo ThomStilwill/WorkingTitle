@@ -8,32 +8,38 @@
 
             <div class="form-title">{{$ctrl.title}}</div>
 
-
             <div class="row">
                 <div class="col-xs-6">
-                    <input-text name="date" label="Date" placeholder="Event Date" tooltip="Enter the date the the event occured" value="$ctrl.date"
-                        required="true" form="logform">
+                    <input-text name="date" label="Date" placeholder="Event Date" 
+                        tooltip="Enter the date the the event occured" 
+                        ng-model="$ctrl.model.date"
+                        required="true" 
+                        form="logform"
+                        ng-disabled="!$ctrl.editing">
                     </input-text>
                 </div>
                 <div class="col-xs-6">
-                    <input-text name="miles" label="Miles" value="$ctrl.miles" required="true">
+                    <input-text name="miles" label="Miles" ng-model="$ctrl.model.miles" required="true" ng-disabled="!$ctrl.editing">
                     </input-text>
                 </div>
             </div>
 
-            <input-text name="event" label="Event" value="$ctrl.event" required="true">
+            <input-text name="event" label="Event" ng-model="$ctrl.model.event" required="true" ng-disabled="!$ctrl.editing">
             </input-text>
 
-            <input-text name="note" label="Note" value="$ctrl.note" required="true">
+            <input-text name="note" label="Note" ng-model="$ctrl.model.note" required="true" ng-disabled="!$ctrl.editing">
             </input-text>
 
+            <input type="hidden" ng-model="$ctrl.model.id">
 
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+                    <button type="submit" class="btn btn-primary pull-right" ng-disabled="!$ctrl.editing">Save</button>
+                    <button type="button" class="btn btn-default pull-right" ng-disabled="$ctrl.editing" ng-click="$ctrl.add()">Add</button>
                 </div>
             </div>
-            <!-- <hr/> <pre>{{$ctrl | json}}</pre> -->
+            <!-- <hr/> <pre>{{$ctrl.model | json}}</pre> -->
+            <hr/> <pre>{{loginform | json}}</pre>
         </div>
     </form>
 
@@ -41,7 +47,12 @@
     <br/>
     <div class="row">
         <div class="col-xs-12">
-            <input-table name="logs" value="$ctrl.logs" columns="$ctrl.columns" label="Maintenance Logs"></input-table>
+            <input-table name="logs" 
+                         label="Maintenance Logs"
+                         value="$ctrl.logs" 
+                         columns="$ctrl.columns" 
+                         editmethod="$ctrl.edit(item)">
+            </input-table>
         </div>
     </div>
     

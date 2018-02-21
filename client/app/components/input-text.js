@@ -1,7 +1,7 @@
 angular.module('ratel')
   .component('inputText', {
     templateUrl: 'app/components/input-text.html',
-    require: {parentform: '^form'},
+    require: {parentform: '^form', model: 'ngModel'},
     bindings: {
       name: '@',
       label: '@',
@@ -10,16 +10,15 @@ angular.module('ratel')
       required: '@',
       minLength: '@',
       pattern: '@',
-      value: '=',
       onChange: '&',
       submitted: '<',
       form: '<'
     },
-    controller: function ($window) {
+    controller: function ($scope, $window) {
       const ctrl = this
 
       ctrl.change = function () {
-        ctrl.value = ctrl.internalValue
+        ctrl.model.$setViewValue(ctrl.internalValue)
         ctrl.onChange({
           name: ctrl.name,
           value: ctrl.internalValue
@@ -33,11 +32,17 @@ angular.module('ratel')
       ctrl.$onInit = function () {
         ctrl.elementId = $window.angular.copy(ctrl.name)
         ctrl.form = ctrl.parentform
+
+        ctrl.model.$render = () => {
+          ctrl.internalValue = ctrl.model.$modelValue
+          ctrl.model.$setViewValue(ctrl.internalValue)
+        }
       }
 
       ctrl.$onChanges = function (changes) {
-        if (changes.value) {
-          ctrl.internalValue = $window.angular.copy(ctrl.value)
+        if (changes.model) {
+          console.log(changes)
+          ctrl.internalValue = $window.angular.copy(ctrl.model)
         }
       }
     }

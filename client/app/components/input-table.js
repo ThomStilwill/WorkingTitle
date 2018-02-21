@@ -9,7 +9,7 @@ angular.module('ratel')
       columns: '=',
       value: '=',
       sortkey: '=',
-      selected: '='
+      editmethod: '&'
     },
     controller: function ($window, LogService) {
       const ctrl = this
@@ -44,20 +44,20 @@ angular.module('ratel')
       }
 
       ctrl.sortBy = function (key) {
-        this.sortKey = key
-        this.sortOrders[key] = this.sortOrders[key] * -1
+        ctrl.sortKey = key
+        ctrl.sortOrders[key] = this.sortOrders[key] * -1
       }
 
       ctrl.edit = function (item) {
-        this.editMethod(item)
+        ctrl.editmethod({item: item})
       }
 
       ctrl.remove = function (item) {
-        this.removeMethod(item)
+        ctrl.removeMethod(item)
       }
 
       ctrl.select = function (id) {
-        this.selected = id
+        ctrl.selected = id
       }
     }
   })

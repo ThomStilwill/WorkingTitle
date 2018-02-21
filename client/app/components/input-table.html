@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="entry in $ctrl.filteredData()" ng-click="$ctrl.select(entry.id)" ng-class="{'selected-row': selected === entry.id}">
+          <tr ng-repeat="entry in $ctrl.filteredData()" ng-click="$ctrl.select(entry.id)" ng-class="{'selected-row': $ctrl.selected === entry.id}">
             <td ng-click="$ctrl.edit(entry)"><i class="icon-edit" alt=edit></i></td>  
             <td ng-click="$ctrl.remove(entry)"><i class="icon-remove" alt=delete></td>  
             <td ng-repeat="key in $ctrl.columns">
