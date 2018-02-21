@@ -6,6 +6,7 @@ angular.module('ratel')
 
       ctrl.$onInit = function () {
         ctrl.title = 'Log'
+        ctrl.columns = ['id', 'date', 'miles', 'event', 'note']
 
         LogService.getAll()
           .then(function (data) {

@@ -1,0 +1,38 @@
+<div class="form-group" >
+
+    <input-label name="{{$ctrl.name}}" 
+                 label="{{$ctrl.label}}"
+                 tooltip="{{$ctrl.tooltip}}">
+    </input-label>
+
+    <br/>
+
+    <label class="form-label">Query: </label> <input type="text" class="form-control" ng-model="$ctrl.filterKey" />
+
+    <table class="table">
+        <thead>
+          <tr>
+              <th></th>
+              <th></th>
+              
+            <th ng-repeat="key in $ctrl.columns"
+              ng-click="$ctrl.sortBy(key)"
+              ng-class="{ active: sortKey == key }">
+              {{ key | uppercase }}
+              <span class="arrow" ng-class="$ctrl.sortOrders[key] > 0 ? 'asc' : 'dsc'">
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="entry in $ctrl.filteredData()" ng-click="$ctrl.select(entry.id)" ng-class="{'selected-row': selected === entry.id}">
+            <td ng-click="$ctrl.edit(entry)"><i class="icon-edit" alt=edit></i></td>  
+            <td ng-click="$ctrl.remove(entry)"><i class="icon-remove" alt=delete></td>  
+            <td ng-repeat="key in $ctrl.columns">
+              {{entry[key]}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>
