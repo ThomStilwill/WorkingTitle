@@ -671,6 +671,7 @@ angular.module('ratel')
 
 angular.module('ratel')
   .component('log', {
+    require: ['form'],
     templateUrl: 'app/views/log.html',
     controller: function ($scope, $filter, LogService) {
       const ctrl = this
@@ -681,7 +682,6 @@ angular.module('ratel')
       ctrl.$onInit = function () {
         ctrl.title = 'Log'
         ctrl.columns = ['id', 'date', 'miles', 'event', 'note']
-
         ctrl.event = 'something'
         load()
       }
@@ -700,11 +700,12 @@ angular.module('ratel')
         ctrl.model.event = ''
         ctrl.model.note = ''
         ctrl.editing = false
+        $scope.logform.$setPristine()
       }
 
       ctrl.add = function () {
         clear()
-        // ctrl.editing = true
+        ctrl.editing = true
       }
 
       ctrl.edit = function (item) {
