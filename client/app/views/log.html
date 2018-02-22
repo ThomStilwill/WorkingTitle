@@ -15,35 +15,35 @@
                         ng-model="$ctrl.model.date"
                         required="true" 
                         form="logform"
-                        ng-disabled="!$ctrl.editing">
+                        ng-readonly="!$ctrl.editing">
                     </input-text>
                 </div>
                 <div class="col-xs-6">
-                    <input-text name="miles" label="Miles" ng-model="$ctrl.model.miles" required="true" ng-disabled="!$ctrl.editing">
+                    <input-text name="miles" label="Miles" ng-model="$ctrl.model.miles" required="true" ng-readonly="!($ctrl.editing)">
                     </input-text>
                 </div>
             </div>
 
-            <input-text name="event" label="Event" ng-model="$ctrl.model.event" required="true" ng-disabled="!$ctrl.editing">
+            <input-text name="event" label="Event" ng-model="$ctrl.model.event" required="true" ng-readonly="!$ctrl.editing">
             </input-text>
 
-            <input-text name="note" label="Note" ng-model="$ctrl.model.note" ng-disabled="!$ctrl.editing">
+            <input-text name="note" label="Note" ng-model="$ctrl.model.note" ng-readonly="!$ctrl.editing">
             </input-text>
 
             <input type="hidden" ng-model="$ctrl.model.id">
 
-            <div class="row">
-                <div class="col-xs-12">
+            <div class="btn-toolbar">
+                
                     <button type="submit" class="btn btn-primary pull-right" ng-disabled="!$ctrl.editing">Save</button>
                     <button type="button" class="btn btn-default pull-right" ng-disabled="$ctrl.editing" ng-click="$ctrl.add()">Add</button>
-                </div>
+                
             </div>
-            <hr/> <pre>{{$ctrl.model | json}}</pre>
+            
             <!-- <hr/> <pre>{{logform | json}}</pre> -->
         </div>
     </form>
 
-    <hr/>
+    
     <br/>
     <div class="row">
         <div class="col-xs-12">
@@ -57,4 +57,7 @@
         </div>
     </div>
     
+    <hr/> <pre>{{$ctrl | json}}</pre>
+
+
 </div>
