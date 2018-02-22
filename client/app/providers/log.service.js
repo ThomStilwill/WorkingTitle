@@ -8,6 +8,11 @@ angular.module('ratel')
         })
     }
 
+    function remove (model) {
+      var url = 'api/log/' + model.id
+      return $http.delete(url)
+    }
+
     function save (model) {
       var url
 
@@ -22,6 +27,7 @@ angular.module('ratel')
 
     return {
       getAll: getAll,
-      save: save
+      save: save,
+      remove: remove
     }
   }])

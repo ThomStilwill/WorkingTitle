@@ -27,7 +27,7 @@
             <input-text name="event" label="Event" ng-model="$ctrl.model.event" required="true" ng-disabled="!$ctrl.editing">
             </input-text>
 
-            <input-text name="note" label="Note" ng-model="$ctrl.model.note" required="true" ng-disabled="!$ctrl.editing">
+            <input-text name="note" label="Note" ng-model="$ctrl.model.note" ng-disabled="!$ctrl.editing">
             </input-text>
 
             <input type="hidden" ng-model="$ctrl.model.id">
@@ -38,8 +38,8 @@
                     <button type="button" class="btn btn-default pull-right" ng-disabled="$ctrl.editing" ng-click="$ctrl.add()">Add</button>
                 </div>
             </div>
-            <!-- <hr/> <pre>{{$ctrl.model | json}}</pre> -->
-            <hr/> <pre>{{logform | json}}</pre>
+            <hr/> <pre>{{$ctrl.model | json}}</pre>
+            <!-- <hr/> <pre>{{logform | json}}</pre> -->
         </div>
     </form>
 
@@ -51,7 +51,8 @@
                          label="Maintenance Logs"
                          value="$ctrl.logs" 
                          columns="$ctrl.columns" 
-                         editmethod="$ctrl.edit(item)">
+                         editmethod="$ctrl.edit(item)"
+                         removemethod="$ctrl.remove(item)">
             </input-table>
         </div>
     </div>

@@ -15,6 +15,10 @@ angular.module('ratel')
         load()
       }
 
+      ctrl.$postLink = function () {
+        ctrl.form = $scope.logform
+      }
+
       function load () {
         LogService.getAll()
           .then(function (data) {
@@ -29,7 +33,7 @@ angular.module('ratel')
         ctrl.model.event = ''
         ctrl.model.note = ''
         ctrl.editing = false
-        $scope.logform.$setPristine()
+        ctrl.form.$setPristine()
       }
 
       ctrl.add = function () {
@@ -43,7 +47,16 @@ angular.module('ratel')
         ctrl.model.miles = item.miles
         ctrl.model.event = item.event
         ctrl.model.note = ctrl.note
+        ctrl.form.$setPristine()
         ctrl.editing = true
+      }
+
+      ctrl.remove = function (item) {
+        console.log(item)
+        LogService.remove(item)
+          .then(function () {
+            load()
+          })
       }
 
       ctrl.submit = function (form) {
@@ -56,6 +69,7 @@ angular.module('ratel')
         LogService.save(ctrl.model)
           .then(function () {
             clear()
+            load()
           })
       }
     }

@@ -9,7 +9,8 @@ angular.module('ratel')
       columns: '=',
       value: '=',
       sortkey: '=',
-      editmethod: '&'
+      editmethod: '&',
+      removemethod: '&'
     },
     controller: function ($window, LogService) {
       const ctrl = this
@@ -53,7 +54,7 @@ angular.module('ratel')
       }
 
       ctrl.remove = function (item) {
-        ctrl.removeMethod(item)
+        ctrl.removemethod({item: item})
       }
 
       ctrl.select = function (id) {

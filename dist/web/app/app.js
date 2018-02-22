@@ -169,7 +169,8 @@ angular.module('ratel')
       columns: '=',
       value: '=',
       sortkey: '=',
-      editmethod: '&'
+      editmethod: '&',
+      removemethod: '&'
     },
     controller: function ($window, LogService) {
       const ctrl = this
@@ -213,7 +214,7 @@ angular.module('ratel')
       }
 
       ctrl.remove = function (item) {
-        ctrl.removeMethod(item)
+        ctrl.removemethod({item: item})
       }
 
       ctrl.select = function (id) {
@@ -373,6 +374,11 @@ angular.module('ratel')
         })
     }
 
+    function remove (model) {
+      var url = 'api/log/' + model.id
+      return $http.delete(url)
+    }
+
     function save (model) {
       var url
 
@@ -387,7 +393,8 @@ angular.module('ratel')
 
     return {
       getAll: getAll,
-      save: save
+      save: save,
+      remove: remove
     }
   }])
 
@@ -686,6 +693,10 @@ angular.module('ratel')
         load()
       }
 
+      ctrl.$postLink = function () {
+        ctrl.form = $scope.logform
+      }
+
       function load () {
         LogService.getAll()
           .then(function (data) {
@@ -700,7 +711,7 @@ angular.module('ratel')
         ctrl.model.event = ''
         ctrl.model.note = ''
         ctrl.editing = false
-        $scope.logform.$setPristine()
+        ctrl.form.$setPristine()
       }
 
       ctrl.add = function () {
@@ -714,7 +725,16 @@ angular.module('ratel')
         ctrl.model.miles = item.miles
         ctrl.model.event = item.event
         ctrl.model.note = ctrl.note
+        ctrl.form.$setPristine()
         ctrl.editing = true
+      }
+
+      ctrl.remove = function (item) {
+        console.log(item)
+        LogService.remove(item)
+          .then(function () {
+            load()
+          })
       }
 
       ctrl.submit = function (form) {
@@ -727,6 +747,7 @@ angular.module('ratel')
         LogService.save(ctrl.model)
           .then(function () {
             clear()
+            load()
           })
       }
     }
